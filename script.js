@@ -26,7 +26,8 @@ function initMap() {
             document.getElementById('find-parking').addEventListener('click', () => {
                 findPlaces(userLocation, 'parking');
             });
-        }, () => {
+        }, (error) => {
+            console.error('Geolocation error: ', error);
             handleLocationError(true, map.getCenter());
         }, {
             enableHighAccuracy: true,
