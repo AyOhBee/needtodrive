@@ -8,43 +8,43 @@ function initMap() {
     });
 
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            const userLocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            map.setCenter(userLocation);
-            new google.maps.Marker({
-                position: userLocation,
-                map: map
-            });
-            getWeather(userLocation.lat, userLocation.lng);
-            service = new google.maps.places.PlacesService(map);
-            infoWindow = new google.maps.InfoWindow();
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                map.setCenter(userLocation);
+                new google.maps.Marker({
+                    position: userLocation,
+                    map: map
+                });
+                getWeather(userLocation.lat, userLocation.lng);
+                service = new google.maps.places.PlacesService(map);
+                infoWindow = new google.maps.InfoWindow();
 
-            document.getElementById('find-gas-stations').addEventListener('click', () => {
-                findPlaces(userLocation, 'gas_station');
-            });
-            document.getElementById('find-parking').addEventListener('click', () => {
-                findPlaces(userLocation, 'parking');
-            });
-        }, () => {
-            handleLocationError(true, map.getCenter());
-        }, {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        });
+                document.getElementById('find-gas-stations').addEventListener('click', () => {
+                    findPlaces(userLocation, 'gas_station');
+                });
+                document.getElementById('find-parking').addEventListener('click', () => {
+                    findPlaces(userLocation, 'parking');
+                });
+            },
+            error => {
+                handleLocationError(true, error);
+            },
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
     } else {
-        handleLocationError(false, map.getCenter());
+        handleLocationError(false, null);
     }
 }
 
-function handleLocationError(browserHasGeolocation, pos) {
+function handleLocationError(browserHasGeolocation, error) {
     const errorMsg = browserHasGeolocation
         ? "Error: The Geolocation service failed."
         : "Error: Your browser doesn't support geolocation.";
-    alert(errorMsg);
+    console.error(errorMsg);
     document.getElementById('weather-info').innerText = errorMsg;
 }
 
