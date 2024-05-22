@@ -1,81 +1,51 @@
 let map, service, infoWindow;
 let markers = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-    requestGeolocation();
-});
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 0, lng: 0 }, // Замініть ці значення на значення за замовчуванням
+        zoom: 12
+    });
 
-function requestGeolocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
-            // Приховати повідомлення про дозвіл і показати контент
-            document.getElementById('geolocation-permission').style.display = 'none';
-            document.getElementById('content').style.display = 'block';
-
             const userLocation = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            initMap(userLocation);
+            map.setCenter(userLocation);
+            new google.maps.Marker({
+                position: userLocation,
+                map: map
+            });
             getWeather(userLocation.lat, userLocation.lng);
-        }, error => {
-            console.error('Geolocation error: ', error);
-            handleLocationError(true, error);
+            service = new google.maps.places.PlacesService(map);
+            infoWindow = new google.maps.InfoWindow();
+
+            document.getElementById('find-gas-stations').addEventListener('click', () => {
+                findPlaces(userLocation, 'gas_station');
+            });
+            document.getElementById('find-parking').addEventListener('click', () => {
+                findPlaces(userLocation, 'parking');
+            });
+        }, () => {
+            handleLocationError(true, map.getCenter());
         }, {
             enableHighAccuracy: true,
             timeout: 5000,
             maximumAge: 0
         });
     } else {
-        handleLocationError(false, null);
+        handleLocationError(false, map.getCenter());
     }
 }
 
-function handleLocationError(browserHasGeolocation, error) {
-    let errorMsg;
-    if (browserHasGeolocation) {
-        switch (error.code) {
-            case error.PERMISSION_DENIED:
-                errorMsg = "Error: User denied the request for Geolocation.";
-                break;
-            case error.POSITION_UNAVAILABLE:
-                errorMsg = "Error: Location information is unavailable.";
-                break;
-            case error.TIMEOUT:
-                errorMsg = "Error: The request to get user location timed out.";
-                break;
-            case error.UNKNOWN_ERROR:
-            default:
-                errorMsg = "Error: An unknown error occurred.";
-                break;
-        }
-    } else {
-        errorMsg = "Error: Your browser doesn't support geolocation.";
-    }
-    
+function handleLocationError(browserHasGeolocation, pos) {
+    const errorMsg = browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation.";
     alert(errorMsg);
-    document.getElementById('geolocation-permission').innerText = errorMsg;
-}
-
-function initMap(userLocation) {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: userLocation,
-        zoom: 12
-    });
-    new google.maps.Marker({
-        position: userLocation,
-        map: map
-    });
-
-    service = new google.maps.places.PlacesService(map);
-    infoWindow = new google.maps.InfoWindow();
-
-    document.getElementById('find-gas-stations').addEventListener('click', () => {
-        findPlaces(userLocation, 'gas_station');
-    });
-    document.getElementById('find-parking').addEventListener('click', () => {
-        findPlaces(userLocation, 'parking');
-    });
+    document.getElementById('weather-info').innerText = errorMsg;
 }
 
 async function getWeather(lat, lon) {
@@ -138,3 +108,7 @@ function clearMarkers() {
     });
     markers = [];
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    initMap();
+});
