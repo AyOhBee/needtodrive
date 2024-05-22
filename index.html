@@ -6,12 +6,10 @@
     <title>Google Maps та Погода</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADre9i0W_86odCBBI-6pNRgoFlkkeMva8&libraries=places"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap"></script>
 </head>
 <body>
-    <div id="geolocation-permission" style="display: none;">
-        <p>Завантаження...</p>
-    </div>
+    <div id="geolocation-permission" style="display: none;"></div>
     <div id="content" style="display:none;">
         <div id="map"></div>
         <div id="controls">
