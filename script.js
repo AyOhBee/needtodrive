@@ -1,6 +1,16 @@
 let map, service, infoWindow;
 let markers = [];
 
+document.getElementById('allow-geolocation').addEventListener('click', () => {
+    document.getElementById('geolocation-permission').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    initMap();
+});
+
+document.getElementById('deny-geolocation').addEventListener('click', () => {
+    document.getElementById('geolocation-permission').innerHTML = '<p>Для використання цього сайту потрібно дозволити геолокацію.</p>';
+});
+
 function initMap() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -107,7 +117,3 @@ function clearMarkers() {
     });
     markers = [];
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    initMap();
-});
