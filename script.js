@@ -1,60 +1,63 @@
 let map, service, infoWindow;
 let markers = [];
 
-document.getElementById('allow-geolocation').addEventListener('click', () => {
-    document.getElementById('geolocation-permission').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-    initMap();
+document.addEventListener('DOMContentLoaded', () => {
+    requestGeolocation();
 });
 
-document.getElementById('deny-geolocation').addEventListener('click', () => {
-    document.getElementById('geolocation-permission').innerHTML = '<p>Для використання цього сайту потрібно дозволити геолокацію.</p>';
-});
-
-function initMap() {
+function requestGeolocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
+            // Приховати повідомлення про дозвіл і показати контент
+            document.getElementById('geolocation-permission').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+
             const userLocation = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: userLocation,
-                zoom: 12
-            });
-            new google.maps.Marker({
-                position: userLocation,
-                map: map
-            });
+            initMap(userLocation);
             getWeather(userLocation.lat, userLocation.lng);
-            service = new google.maps.places.PlacesService(map);
-            infoWindow = new google.maps.InfoWindow();
-
-            document.getElementById('find-gas-stations').addEventListener('click', () => {
-                findPlaces(userLocation, 'gas_station');
-            });
-            document.getElementById('find-parking').addEventListener('click', () => {
-                findPlaces(userLocation, 'parking');
-            });
-        }, (error) => {
+        }, error => {
             console.error('Geolocation error: ', error);
-            handleLocationError(true, map.getCenter());
+            handleLocationError(true);
         }, {
             enableHighAccuracy: true,
             timeout: 5000,
             maximumAge: 0
         });
     } else {
-        handleLocationError(false, map.getCenter());
+        handleLocationError(false);
     }
 }
 
-function handleLocationError(browserHasGeolocation, pos) {
+function handleLocationError(browserHasGeolocation) {
     const errorMsg = browserHasGeolocation
         ? "Error: The Geolocation service failed."
         : "Error: Your browser doesn't support geolocation.";
     alert(errorMsg);
-    document.getElementById('weather-info').innerText = errorMsg;
+    document.getElementById('geolocation-permission').innerText = errorMsg;
+}
+
+function initMap(userLocation) {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: userLocation,
+        zoom: 12
+    });
+    new google.maps.Marker({
+        position: userLocation,
+        map: map
+    });
+
+    service = new google.maps.places.PlacesService(map);
+    infoWindow = new google.maps.InfoWindow();
+
+    document.getElementById('find-gas-stations').addEventListener('click', () => {
+        findPlaces(userLocation, 'gas_station');
+    });
+    document.getElementById('find-parking').addEventListener('click', () => {
+        findPlaces(userLocation, 'parking');
+    });
 }
 
 async function getWeather(lat, lon) {
