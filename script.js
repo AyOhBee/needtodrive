@@ -20,21 +20,39 @@ function requestGeolocation() {
             getWeather(userLocation.lat, userLocation.lng);
         }, error => {
             console.error('Geolocation error: ', error);
-            handleLocationError(true);
+            handleLocationError(true, error);
         }, {
             enableHighAccuracy: true,
             timeout: 5000,
             maximumAge: 0
         });
     } else {
-        handleLocationError(false);
+        handleLocationError(false, null);
     }
 }
 
-function handleLocationError(browserHasGeolocation) {
-    const errorMsg = browserHasGeolocation
-        ? "Error: The Geolocation service failed."
-        : "Error: Your browser doesn't support geolocation.";
+function handleLocationError(browserHasGeolocation, error) {
+    let errorMsg;
+    if (browserHasGeolocation) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                errorMsg = "Error: User denied the request for Geolocation.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                errorMsg = "Error: Location information is unavailable.";
+                break;
+            case error.TIMEOUT:
+                errorMsg = "Error: The request to get user location timed out.";
+                break;
+            case error.UNKNOWN_ERROR:
+            default:
+                errorMsg = "Error: An unknown error occurred.";
+                break;
+        }
+    } else {
+        errorMsg = "Error: Your browser doesn't support geolocation.";
+    }
+    
     alert(errorMsg);
     document.getElementById('geolocation-permission').innerText = errorMsg;
 }
