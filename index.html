@@ -1,25 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Maps та Погода</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADre9i0W_86odCBBI-6pNRgoFlkkeMva8&libraries=places&callback=initMap"></script>
+    <title>Weather and Map</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        #weather {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="geolocation-permission" style="display: none;"></div>
-    <div id="content" style="display:none;">
-        <div id="map"></div>
-        <div id="controls">
-            <button id="find-gas-stations">Знайти заправки</button>
-            <button id="find-parking">Знайти парковки</button>
-        </div>
-        <div id="weather">
-            <h2>Погода</h2>
-            <div id="weather-info"></div>
-        </div>
-    </div>
+    <h1>Weather and Map</h1>
+    <div id="map"></div>
+    <div id="weather"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADre9i0W_86odCBBI-6pNRgoFlkkeMva8&callback=initMap" async defer></script>
+    <script>
+        let map;
+        
+        function initMap() {
+            const location = { lat: 50.4501, lng: 30.5234 }; // Coordinates of Kyiv
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: location,
+                zoom: 10
+            });
+            
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            
+            getWeather(location.lat, location.lng);
+        }
+        
+        function getWeather(lat, lon) {
+            const apiKey = '0a282b27221cd0e994be547d9054959a';
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const weatherDiv = document.getElementById('weather');
+                    weatherDiv.innerHTML = `
+                        <h2>Weather in ${data.name}</h2>
+                        <p>Temperature: ${data.main.temp}°C</p>
+                        <p>Weather: ${data.weather[0].description}</p>
+                        <p>Humidity: ${data.main.humidity}%</p>
+                        <p>Wind Speed: ${data.wind.speed} m/s</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                });
+        }
+    </script>
 </body>
 </html>
