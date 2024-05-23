@@ -11,6 +11,7 @@ body {
 h1 {
     color: #333;
     margin-top: 20px;
+    text-align: center;
 }
 
 #map {
@@ -22,6 +23,7 @@ h1 {
 
 #controls {
     margin-top: 20px;
+    text-align: center;
 }
 
 #controls button {
@@ -63,4 +65,35 @@ h1 {
     color: red;
     font-weight: bold;
     margin-top: 20px;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 600px) {
+    #map {
+        height: 300px;
+        width: 100%;
+    }
+    
+    #weather {
+        width: 100%;
+        padding: 10px;
+    }
+
+    #controls button {
+        padding: 8px 16px;
+        font-size: 14px;
+        margin: 3px;
+    }
+}
+
+@media (max-width: 400px) {
+    #map {
+        height: 250px;
+    }
+
+    #controls button {
+        padding: 6px 12px;
+        font-size: 12px;
+        margin: 2px;
+    }
 }
