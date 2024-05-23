@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Weather and Map</title>
+    <title>Погода та Карта</title>
     <style>
         #map {
             height: 400px;
@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <h1>Weather and Map</h1>
+    <h1>Погода та Карта</h1>
     <div id="map"></div>
     <div id="weather"></div>
 
@@ -22,38 +22,71 @@
         let map;
         
         function initMap() {
-            const location = { lat: 50.4501, lng: 30.5234 }; // Coordinates of Kyiv
+            // Перевірка наявності підтримки геолокації у браузері
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: userLocation,
+                        zoom: 10
+                    });
+                    
+                    const marker = new google.maps.Marker({
+                        position: userLocation,
+                        map: map
+                    });
+                    
+                    getWeather(userLocation.lat, userLocation.lng);
+                }, () => {
+                    handleLocationError(true);
+                });
+            } else {
+                // Якщо геолокація не підтримується
+                handleLocationError(false);
+            }
+        }
+        
+        function handleLocationError(browserHasGeolocation) {
+            const defaultLocation = { lat: 50.4501, lng: 30.5234 }; // Координати Києва
             map = new google.maps.Map(document.getElementById('map'), {
-                center: location,
+                center: defaultLocation,
                 zoom: 10
             });
             
             const marker = new google.maps.Marker({
-                position: location,
+                position: defaultLocation,
                 map: map
             });
             
-            getWeather(location.lat, location.lng);
+            getWeather(defaultLocation.lat, defaultLocation.lng);
+            
+            const weatherDiv = document.getElementById('weather');
+            weatherDiv.innerHTML = browserHasGeolocation 
+                ? '<p>Помилка: Не вдалося визначити місцезнаходження.</p>'
+                : '<p>Помилка: Ваш браузер не підтримує геолокацію.</p>';
         }
         
         function getWeather(lat, lon) {
             const apiKey = '0a282b27221cd0e994be547d9054959a';
-            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=uk&appid=${apiKey}`;
             
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     const weatherDiv = document.getElementById('weather');
                     weatherDiv.innerHTML = `
-                        <h2>Weather in ${data.name}</h2>
-                        <p>Temperature: ${data.main.temp}°C</p>
-                        <p>Weather: ${data.weather[0].description}</p>
-                        <p>Humidity: ${data.main.humidity}%</p>
-                        <p>Wind Speed: ${data.wind.speed} m/s</p>
+                        <h2>Погода в ${data.name}</h2>
+                        <p>Температура: ${data.main.temp}°C</p>
+                        <p>Погода: ${data.weather[0].description}</p>
+                        <p>Вологість: ${data.main.humidity}%</p>
+                        <p>Швидкість вітру: ${data.wind.speed} м/с</p>
                     `;
                 })
                 .catch(error => {
-                    console.error('Error fetching weather data:', error);
+                    console.error('Помилка при отриманні даних про погоду:', error);
                 });
         }
     </script>
