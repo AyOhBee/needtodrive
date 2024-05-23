@@ -90,7 +90,7 @@ h1 {
     #weather {
         width: 100%;
         padding: 10px;
-        font-size: 18px; /* Збільшення розміру тексту на малих екранах */
+        font-size: 20px; /* Збільшення розміру тексту на малих екранах */
     }
 
     #controls button {
