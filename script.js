@@ -110,3 +110,20 @@ function clearMarkers() {
     }
     currentMarkers = [];
 }
+// Додатковий функціонал для адаптивності
+window.addEventListener('resize', function() {
+    adjustMapSize();
+});
+
+function adjustMapSize() {
+    const orientation = window.matchMedia("(orientation: portrait)").matches ? 'portrait' : 'landscape';
+    const map = document.getElementById('map');
+    if (orientation === 'portrait') {
+        map.style.height = '50vh';
+    } else {
+        map.style.height = '70vh';
+    }
+}
+
+// Виклик функції при завантаженні сторінки
+adjustMapSize();
