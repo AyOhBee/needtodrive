@@ -50,7 +50,7 @@ function handleLocationError(browserHasGeolocation, error = null) {
 }
 
 function getWeather(lat, lon) {
-    const apiKey = 'YOUR_OPENWEATHER_API_KEY';
+    const apiKey = '0a282b27221cd0e994be547d9054959a';
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=uk&appid=${apiKey}`;
     
     fetch(url)
