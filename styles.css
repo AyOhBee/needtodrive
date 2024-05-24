@@ -41,7 +41,7 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 24px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -96,7 +96,7 @@ h1 {
         width: 30%;
         margin-right: 20px;
         margin-bottom: 0;
-        height: 600px; /* Зробимо блок з погодою такої ж висоти, як і мапа */
+        height: 560px; /* Зробимо блок з погодою такої ж висоти, як і мапа */
     }
 
     #map {
