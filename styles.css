@@ -85,33 +85,17 @@ h1 {
     margin-top: 20px;
 }
 
-@media (min-width: 601px) {
+@media (max-width: 600px) {
     .container {
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
+        flex-direction: column;
     }
 
     #weather {
-        width: 30%;
-        margin-right: 20px;
-        margin-bottom: 0;
-        height: 540px;
+        width: 90%;
+        margin: 20px auto;
     }
 
     #map {
-        width: 65%;
         height: 400px;
-    }
-}
-
-@media (max-width: 600px) {
-    #map {
-        height: 50vh;
-    }
-
-    #controls {
-        margin-top: 20px;
-        width: 100%;
     }
 }
