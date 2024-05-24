@@ -96,7 +96,7 @@ h1 {
         width: 30%;
         margin-right: 20px;
         margin-bottom: 0;
-        height: 560px; /* Зробимо блок з погодою такої ж висоти, як і мапа */
+        height: 540px;
     }
 
     #map {
