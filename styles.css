@@ -86,16 +86,8 @@ h1 {
 }
 
 @media (max-width: 600px) {
-    .container {
-        flex-direction: column;
-    }
-
-    #weather {
-        width: 90%;
-        margin: 20px auto;
-    }
-
-    #map {
-        height: 400px;
+    #controls button {
+        padding: 15px 30px; /* збільшуємо величину кнопок на малих екранах */
+        font-size: 18px; /* збільшуємо розмір тексту на малих екранах */
     }
 }
