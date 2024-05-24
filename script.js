@@ -63,6 +63,7 @@ function getWeather(lat, lon) {
                 <p>Погода: ${data.weather[0].description}</p>
                 <p>Вологість: ${data.main.humidity}%</p>
                 <p>Швидкість вітру: ${data.wind.speed} м/с</p>
+                <p>Напрямок вітру: ${data.wind.direction}°</p>
             `;
         })
         .catch(error => {
