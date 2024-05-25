@@ -2,6 +2,7 @@ let map;
 let service;
 let infowindow;
 let currentMarkers = [];
+let currentType = '';
 
 function initMap() {
     const notificationDiv = document.getElementById('notification');
@@ -73,6 +74,17 @@ function getWeather(lat, lon) {
         .catch(error => {
             console.error('Помилка при отриманні даних про погоду:', error);
         });
+}
+
+function toggleMarkers(type) {
+    if (currentType === type) {
+        clearMarkers();
+        currentType = '';
+        return;
+    }
+    
+    currentType = type;
+    findNearbyPlaces(type);
 }
 
 function findNearbyPlaces(type) {
