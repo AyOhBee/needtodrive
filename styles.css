@@ -97,27 +97,31 @@ h1 {
         margin-right: 20px;
         margin-bottom: 0;
         height: auto; /* Дозволяє висоті бути автоматичною */
+        order: 1; /* Встановлюємо порядок для десктопів */
     }
 
     #map {
         width: 65%;
         height: 400px;
+        order: 2; /* Встановлюємо порядок для десктопів */
     }
 }
 
 @media (max-width: 600px) {
     .container {
-        flex-direction: column-reverse; /* Міняємо порядок блоків */
+        flex-direction: column;
     }
 
     #weather {
         width: 90%;
-        margin: 0 auto 20px auto; /* Встановлюємо нижнє поле */
+        margin: 20px auto; /* Встановлюємо верхнє і нижнє поле */
+        order: 1; /* Встановлюємо порядок для мобільних */
     }
 
     #map {
         height: 300px;
-        margin-bottom: 20px; /* Встановлюємо нижнє поле для відступу */
+        margin-top: 20px; /* Встановлюємо верхнє поле для відступу */
+        order: 2; /* Встановлюємо порядок для мобільних */
     }
 
     #controls button {
