@@ -85,6 +85,26 @@ h1 {
     margin-top: 20px;
 }
 
+@media (min-width: 601px) {
+    .container {
+        flex-direction: row;
+        justify-content: space-between; /* Додаємо простір між блоками */
+        align-items: flex-start;
+    }
+
+    #weather {
+        width: 30%;
+        margin-right: 20px;
+        margin-bottom: 0;
+        height: auto; /* Дозволяє висоті бути автоматичною */
+    }
+
+    #map {
+        width: 65%;
+        height: 400px;
+    }
+}
+
 @media (max-width: 600px) {
     .container {
         flex-direction: column;
@@ -96,11 +116,11 @@ h1 {
     }
 
     #map {
-        height: 400px;
+        height: 300px;
     }
 
     #controls button {
-        padding: 15px 30px; /* збільшуємо величину кнопок на малих екранах */
-        font-size: 18px; /* збільшуємо розмір тексту на малих екранах */
+        padding: 15px 30px; /* Збільшуємо величину кнопок на малих екранах */
+        font-size: 18px; /* Збільшуємо розмір тексту на малих екранах */
     }
 }
