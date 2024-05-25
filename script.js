@@ -19,7 +19,12 @@ function initMap() {
             
             const marker = new google.maps.Marker({
                 position: userLocation,
-                map: map
+                map: map,
+                draggable: true // Додаємо можливість перетягування маркера
+            });
+            
+            marker.addListener('dragend', function(event) {
+                getWeather(event.latLng.lat(), event.latLng.lng());
             });
             
             getWeather(userLocation.lat, userLocation.lng);
@@ -110,20 +115,3 @@ function clearMarkers() {
     }
     currentMarkers = [];
 }
-// Додатковий функціонал для адаптивності
-window.addEventListener('resize', function() {
-    adjustMapSize();
-});
-
-function adjustMapSize() {
-    const orientation = window.matchMedia("(orientation: portrait)").matches ? 'portrait' : 'landscape';
-    const map = document.getElementById('map');
-    if (orientation === 'portrait') {
-        map.style.height = '50vh';
-    } else {
-        map.style.height = '70vh';
-    }
-}
-
-// Виклик функції при завантаженні сторінки
-adjustMapSize();
