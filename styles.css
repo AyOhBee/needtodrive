@@ -89,7 +89,7 @@ h1 {
     .container {
         flex-direction: row;
         justify-content: space-between; /* Додаємо простір між блоками */
-        align-items: flex-start;
+        align-items: stretch; /* Вирівнюємо блоки по висоті */
     }
 
     #weather {
