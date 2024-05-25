@@ -88,22 +88,20 @@ h1 {
 @media (min-width: 601px) {
     .container {
         flex-direction: row;
-        justify-content: space-between; /* Додаємо простір між блоками */
-        align-items: stretch; /* Вирівнюємо блоки по висоті */
+        justify-content: space-between;
+        align-items: stretch;
     }
 
     #weather {
         width: 30%;
         margin-right: 20px;
         margin-bottom: 0;
-        height: auto; /* Дозволяє висоті бути автоматичною */
-        order: 1; /* Встановлюємо порядок для десктопів */
+        height: auto;
     }
 
     #map {
         width: 65%;
         height: 400px;
-        order: 2; /* Встановлюємо порядок для десктопів */
     }
 }
 
@@ -114,18 +112,17 @@ h1 {
 
     #weather {
         width: 90%;
-        margin: 20px auto; /* Встановлюємо верхнє і нижнє поле */
-        order: 1; /* Встановлюємо порядок для мобільних */
+        margin: 20px auto;
     }
 
     #map {
+        width: 90%;
         height: 300px;
-        margin-top: 20px; /* Встановлюємо верхнє поле для відступу */
-        order: 2; /* Встановлюємо порядок для мобільних */
+        margin-bottom: 20px;
     }
 
     #controls button {
-        padding: 15px 30px; /* Збільшуємо величину кнопок на малих екранах */
-        font-size: 18px; /* Збільшуємо розмір тексту на малих екранах */
+        padding: 15px 30px;
+        font-size: 18px;
     }
 }
