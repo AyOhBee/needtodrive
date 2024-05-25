@@ -3,8 +3,14 @@ let service;
 let infowindow;
 let currentMarkers = [];
 let currentType = '';
+let directionsService;
+let directionsRenderer;
+let userMarker;
 
 function initMap() {
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+
     const notificationDiv = document.getElementById('notification');
 
     if (navigator.geolocation) {
@@ -17,17 +23,19 @@ function initMap() {
                 center: userLocation,
                 zoom: 10
             });
-            
-            const marker = new google.maps.Marker({
+
+            directionsRenderer.setMap(map);
+
+            userMarker = new google.maps.Marker({
                 position: userLocation,
                 map: map,
                 draggable: true // Додаємо можливість перетягування маркера
             });
-            
-            marker.addListener('dragend', function(event) {
+
+            userMarker.addListener('dragend', function(event) {
                 getWeather(event.latLng.lat(), event.latLng.lng());
             });
-            
+
             getWeather(userLocation.lat, userLocation.lng);
         }, error => {
             handleLocationError(true, error);
@@ -58,7 +66,7 @@ function handleLocationError(browserHasGeolocation, error = null) {
 function getWeather(lat, lon) {
     const apiKey = '0a282b27221cd0e994be547d9054959a';
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=uk&appid=${apiKey}`;
-    
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -93,7 +101,7 @@ function findNearbyPlaces(type) {
         radius: '5000', // радіус у метрах
         type: [type]
     };
-    
+
     service = new google.maps.places.PlacesService(map);
     service.nearbySearch(request, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -115,6 +123,8 @@ function createMarker(place) {
         infowindow = new google.maps.InfoWindow();
         infowindow.setContent(place.name);
         infowindow.open(map, this);
+
+        calculateAndDisplayRoute(marker.position);
     });
 }
 
@@ -123,4 +133,24 @@ function clearMarkers() {
         currentMarkers[i].setMap(null);
     }
     currentMarkers = [];
+}
+
+function calculateAndDisplayRoute(destination) {
+    const request = {
+        origin: userMarker.getPosition(),
+        destination: destination,
+        travelMode: 'DRIVING'
+    };
+
+    directionsService.route(request, function(result, status) {
+        if (status === 'OK') {
+            directionsRenderer.setDirections(result);
+
+            const distance = result.routes[0].legs[0].distance.text;
+            const notificationDiv = document.getElementById('notification');
+            notificationDiv.innerHTML = `<p>Відстань до обраного пункту: ${distance}</p>`;
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
 }
