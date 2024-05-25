@@ -80,17 +80,14 @@ function toggleMarkers(type) {
     if (currentType === type) {
         clearMarkers();
         currentType = '';
-        return;
+    } else {
+        clearMarkers();
+        currentType = type;
+        findNearbyPlaces(type);
     }
-    
-    currentType = type;
-    findNearbyPlaces(type);
 }
 
 function findNearbyPlaces(type) {
-    // Видалити поточні маркери
-    clearMarkers();
-    
     const request = {
         location: map.getCenter(),
         radius: '5000', // радіус у метрах
