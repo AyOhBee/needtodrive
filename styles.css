@@ -112,11 +112,12 @@ h1 {
 
     #weather {
         width: 90%;
-        margin: 20px auto;
+        margin: 20px auto 0 auto; /* Встановлюємо верхнє поле */
     }
 
     #map {
         height: 300px;
+        margin-top: 20px; /* Встановлюємо верхнє поле для відступу */
     }
 
     #controls button {
