@@ -107,17 +107,17 @@ h1 {
 
 @media (max-width: 600px) {
     .container {
-        flex-direction: column;
+        flex-direction: column-reverse; /* Міняємо порядок блоків */
     }
 
     #weather {
         width: 90%;
-        margin: 20px auto 0 auto; /* Встановлюємо верхнє поле */
+        margin: 0 auto 20px auto; /* Встановлюємо нижнє поле */
     }
 
     #map {
         height: 300px;
-        margin-top: 20px; /* Встановлюємо верхнє поле для відступу */
+        margin-bottom: 20px; /* Встановлюємо нижнє поле для відступу */
     }
 
     #controls button {
