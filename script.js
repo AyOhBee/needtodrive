@@ -183,8 +183,13 @@ function calculateAndDisplayRoute(destination) {
             });
 
             const distance = result.routes[0].legs[0].distance.text;
+            const distanceValue = result.routes[0].legs[0].distance.value; // Відстань у метрах
+            const fuelConsumption = parseFloat(document.getElementById('fuelConsumption').value); // Літрів на 100 км
+            const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
+
             const notificationDiv = document.getElementById('notification');
             notificationDiv.innerHTML = `<p>Відстань до обраного пункту: ${distance}</p>`;
+            notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`; // Відображення витрат палива
 
             google.maps.event.addListener(currentRoute, 'click', function() {
                 currentRoute.setMap(null); // Видалення маршруту при натисканні
