@@ -143,9 +143,12 @@ function createMarker(place) {
 
         if (currentRoute) {
             currentRoute.setMap(null); // Видалення попереднього маршруту
+            currentRoute = null;
+            const notificationDiv = document.getElementById('notification');
+            notificationDiv.innerHTML = ''; // Очищення повідомлення про відстань
+        } else {
+            calculateAndDisplayRoute(marker.position);
         }
-
-        calculateAndDisplayRoute(marker.position);
     });
 }
 
@@ -173,6 +176,12 @@ function calculateAndDisplayRoute(destination) {
             const distance = result.routes[0].legs[0].distance.text;
             const notificationDiv = document.getElementById('notification');
             notificationDiv.innerHTML = `<p>Відстань до обраного пункту: ${distance}</p>`;
+
+            google.maps.event.addListener(currentRoute, 'click', function() {
+                currentRoute.setMap(null); // Видалення маршруту при натисканні
+                currentRoute = null;
+                notificationDiv.innerHTML = ''; // Очищення повідомлення про відстань
+            });
         } else {
             window.alert('Directions request failed due to ' + status);
         }
