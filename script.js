@@ -8,6 +8,10 @@ let directionsRenderer;
 let userMarker;
 let currentRoute;
 
+const blueMarkerIcon = {
+    url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+};
+
 function initMap() {
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer();
@@ -30,7 +34,8 @@ function initMap() {
             userMarker = new google.maps.Marker({
                 position: userLocation,
                 map: map,
-                draggable: true
+                draggable: true,
+                icon: blueMarkerIcon
             });
 
             userMarker.addListener('dragend', function(event) {
@@ -59,7 +64,8 @@ function handleLocationError(browserHasGeolocation, error = null) {
     userMarker = new google.maps.Marker({
         position: kharkivLocation,
         map: map,
-        draggable: true
+        draggable: true,
+        icon: blueMarkerIcon
     });
 
     userMarker.addListener('dragend', function(event) {
