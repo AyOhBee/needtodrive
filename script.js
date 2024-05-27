@@ -6,6 +6,7 @@ let currentType = '';
 let directionsService;
 let directionsRenderer;
 let userMarker;
+let currentRoute;
 
 function initMap() {
     directionsService = new google.maps.DirectionsService();
@@ -29,7 +30,7 @@ function initMap() {
             userMarker = new google.maps.Marker({
                 position: userLocation,
                 map: map,
-                draggable: true // Додаємо можливість перетягування маркера
+                draggable: true
             });
 
             userMarker.addListener('dragend', function(event) {
@@ -47,7 +48,7 @@ function initMap() {
 
 function handleLocationError(browserHasGeolocation, error = null) {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 49.0, lng: 32.0 }, // Центр України
+        center: { lat: 49.0, lng: 32.0 },
         zoom: 6
     });
 
@@ -98,7 +99,7 @@ function toggleMarkers(type) {
 function findNearbyPlaces(type) {
     const request = {
         location: map.getCenter(),
-        radius: '5000', // радіус у метрах
+        radius: '5000',
         type: [type]
     };
 
@@ -124,6 +125,10 @@ function createMarker(place) {
         infowindow.setContent(place.name);
         infowindow.open(map, this);
 
+        if (currentRoute) {
+            currentRoute.setMap(null); // Видалення попереднього маршруту
+        }
+
         calculateAndDisplayRoute(marker.position);
     });
 }
@@ -144,7 +149,10 @@ function calculateAndDisplayRoute(destination) {
 
     directionsService.route(request, function(result, status) {
         if (status === 'OK') {
-            directionsRenderer.setDirections(result);
+            currentRoute = new google.maps.DirectionsRenderer({
+                map: map,
+                directions: result
+            });
 
             const distance = result.routes[0].legs[0].distance.text;
             const notificationDiv = document.getElementById('notification');
