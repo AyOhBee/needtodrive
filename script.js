@@ -2,22 +2,10 @@ let map;
 let service;
 let infowindow;
 let currentMarkers = [];
-let currentType = '';
-let directionsService;
-let directionsRenderer;
-let userMarker;
 let currentRoute;
-
-const blueMarkerIcon = {
-    url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-};
+let currentDestination;
 
 function initMap() {
-    directionsService = new google.maps.DirectionsService();
-    directionsRenderer = new google.maps.DirectionsRenderer({
-        suppressMarkers: true // Прибираємо точки A та B
-    });
-
     const notificationDiv = document.getElementById('notification');
 
     if (navigator.geolocation) {
@@ -31,17 +19,9 @@ function initMap() {
                 zoom: 10
             });
 
-            directionsRenderer.setMap(map);
-
-            userMarker = new google.maps.Marker({
+            const marker = new google.maps.Marker({
                 position: userLocation,
-                map: map,
-                draggable: true,
-                icon: blueMarkerIcon
-            });
-
-            userMarker.addListener('dragend', function(event) {
-                getWeather(event.latLng.lat(), event.latLng.lng());
+                map: map
             });
 
             getWeather(userLocation.lat, userLocation.lng);
@@ -54,27 +34,10 @@ function initMap() {
 }
 
 function handleLocationError(browserHasGeolocation, error = null) {
-    const kharkivLocation = { lat: 49.9935, lng: 36.2304 }; // Координати Харкова
-
     map = new google.maps.Map(document.getElementById('map'), {
-        center: kharkivLocation,
-        zoom: 10
+        center: { lat: 49.0, lng: 32.0 }, // Центр України
+        zoom: 6
     });
-
-    directionsRenderer.setMap(map);
-
-    userMarker = new google.maps.Marker({
-        position: kharkivLocation,
-        map: map,
-        draggable: true,
-        icon: blueMarkerIcon
-    });
-
-    userMarker.addListener('dragend', function(event) {
-        getWeather(event.latLng.lat(), event.latLng.lng());
-    });
-
-    getWeather(kharkivLocation.lat, kharkivLocation.lng);
 
     const notificationDiv = document.getElementById('notification');
     if (browserHasGeolocation) {
@@ -109,21 +72,12 @@ function getWeather(lat, lon) {
         });
 }
 
-function toggleMarkers(type) {
-    if (currentType === type) {
-        clearMarkers();
-        currentType = '';
-    } else {
-        clearMarkers();
-        currentType = type;
-        findNearbyPlaces(type);
-    }
-}
+function toggleMarker(type) {
+    clearMarkers();
 
-function findNearbyPlaces(type) {
     const request = {
         location: map.getCenter(),
-        radius: '5000',
+        radius: '5000', // радіус у метрах
         type: [type]
     };
 
@@ -145,18 +99,16 @@ function createMarker(place) {
     currentMarkers.push(marker);
 
     google.maps.event.addListener(marker, 'click', function() {
+        if (currentRoute) {
+            currentRoute.setMap(null); // Видалення маршруту при натисканні на новий маркер
+            currentRoute = null;
+            notificationDiv.innerHTML = ''; // Очищення повідомлення про відстань
+        }
         infowindow = new google.maps.InfoWindow();
         infowindow.setContent(place.name);
         infowindow.open(map, this);
-
-        if (currentRoute) {
-            currentRoute.setMap(null); // Видалення попереднього маршруту
-            currentRoute = null;
-            const notificationDiv = document.getElementById('notification');
-            notificationDiv.innerHTML = ''; // Очищення повідомлення про відстань
-        } else {
-            calculateAndDisplayRoute(marker.position);
-        }
+        currentDestination = place.geometry.location;
+        calculateAndDisplayRoute(currentDestination);
     });
 }
 
@@ -174,6 +126,7 @@ function calculateAndDisplayRoute(destination) {
         travelMode: 'DRIVING'
     };
 
+    const directionsService = new google.maps.DirectionsService();
     directionsService.route(request, function(result, status) {
         if (status === 'OK') {
             currentRoute = new google.maps.DirectionsRenderer({
@@ -182,13 +135,12 @@ function calculateAndDisplayRoute(destination) {
                 suppressMarkers: true // Прибираємо точки A та B
             });
 
-            const distance = result.routes[0].legs[0].distance.text;
-            const distanceValue = result.routes[0].legs[0].distance.value; // Відстань у метрах
-            const fuelConsumption = parseFloat(document.getElementById('fuelConsumption').value); // Літрів на 100 км
-            const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
+            const distance = result.routes[0].legs[0].distance.value; // Відстань у метрах
+
+            const fuelNeeded = calculateFuelConsumption(distance); // Обчислення витрат палива
 
             const notificationDiv = document.getElementById('notification');
-            notificationDiv.innerHTML = `<p>Відстань до обраного пункту: ${distance}</p>`;
+            notificationDiv.innerHTML = `<p>Відстань до обраного пункту: ${result.routes[0].legs[0].distance.text}</p>`;
             notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`; // Відображення витрат палива
 
             google.maps.event.addListener(currentRoute, 'click', function() {
@@ -201,3 +153,24 @@ function calculateAndDisplayRoute(destination) {
         }
     });
 }
+
+function calculateFuelConsumption(distance) {
+    const fuelConsumption = parseFloat(document.getElementById('fuelInput').value);
+    return (distance / 100) * fuelConsumption; // Витрата пального, літрів
+}
+
+window.addEventListener('resize', function() {
+    adjustMapSize();
+});
+
+function adjustMapSize() {
+    const orientation = window.matchMedia("(orientation: portrait)").matches ? 'portrait' : 'landscape';
+    const map = document.getElementById('map');
+    if (orientation === 'portrait') {
+        map.style.height = '50vh';
+    } else {
+        map.style.height = '70vh';
+    }
+}
+
+adjustMapSize();
