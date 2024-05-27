@@ -47,10 +47,26 @@ function initMap() {
 }
 
 function handleLocationError(browserHasGeolocation, error = null) {
+    const kharkivLocation = { lat: 49.9935, lng: 36.2304 }; // Координати Харкова
+
     map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 49.0, lng: 32.0 },
-        zoom: 6
+        center: kharkivLocation,
+        zoom: 10
     });
+
+    directionsRenderer.setMap(map);
+
+    userMarker = new google.maps.Marker({
+        position: kharkivLocation,
+        map: map,
+        draggable: true
+    });
+
+    userMarker.addListener('dragend', function(event) {
+        getWeather(event.latLng.lat(), event.latLng.lng());
+    });
+
+    getWeather(kharkivLocation.lat, kharkivLocation.lng);
 
     const notificationDiv = document.getElementById('notification');
     if (browserHasGeolocation) {
