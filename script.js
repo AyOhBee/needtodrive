@@ -109,7 +109,7 @@ function getWeather(lat, lon) {
         });
 }
 
-function toggleMarkers(type) {
+function toggleMarker(type) {
     if (currentType === type) {
         clearMarkers();
         currentType = '';
@@ -169,10 +169,13 @@ function clearMarkers() {
 
 function calculateAndDisplayRoute(destination) {
     const request = {
+        origin: user
+    const request = {
         origin: userMarker.getPosition(),
         destination: destination,
         travelMode: 'DRIVING'
     };
+
     directionsService.route(request, function(result, status) {
         if (status === 'OK') {
             currentRoute = new google.maps.DirectionsRenderer({
@@ -183,7 +186,7 @@ function calculateAndDisplayRoute(destination) {
 
             const distance = result.routes[0].legs[0].distance.text;
             const distanceValue = result.routes[0].legs[0].distance.value; // Відстань у метрах
-            const fuelConsumption = parseFloat(document.getElementById('fuelConsumption').value); // Літрів на 100 км
+            const fuelConsumption = parseFloat(document.getElementById('fuelInput').value); // Літрів на 100 км
             const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
 
             const notificationDiv = document.getElementById('notification');
