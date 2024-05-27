@@ -14,7 +14,9 @@ const blueMarkerIcon = {
 
 function initMap() {
     directionsService = new google.maps.DirectionsService();
-    directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer = new google.maps.DirectionsRenderer({
+        suppressMarkers: true // Прибираємо точки A та B
+    });
 
     const notificationDiv = document.getElementById('notification');
 
@@ -176,7 +178,8 @@ function calculateAndDisplayRoute(destination) {
         if (status === 'OK') {
             currentRoute = new google.maps.DirectionsRenderer({
                 map: map,
-                directions: result
+                directions: result,
+                suppressMarkers: true // Прибираємо точки A та B
             });
 
             const distance = result.routes[0].legs[0].distance.text;
