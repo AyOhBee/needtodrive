@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Погода та Карта</title>
+    <title>NeedToDrive</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,6 +17,10 @@
     <div id="controls">
         <button onclick="toggleMarkers('gas_station')">Найближчі заправки</button>
         <button onclick="toggleMarkers('parking')">Найближчі парковки</button>
+        <div>
+            <label for="fuelConsumption">Середня витрата палива (л/100 км):</label>
+            <input type="number" id="fuelConsumption" value="8">
+        </div>
     </div>
     <div id="notification"></div>
 
