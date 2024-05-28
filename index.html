@@ -6,14 +6,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Need To Drive</h1>
-    <div class="container">
-        <div id="weather">
-            <h2>Поточна погода</h2>
-            <p>Температура: <span id="temp"></span>°C</p>
-            <p>Опис: <span id="description"></span></p>
-        </div>
-        <div id="map"></div>
+    <div id="introPage">
+        <h1>Ласкаво просимо на сайт "Need To Drive"</h1>
+        <p>Цей веб-додаток створено для інформаційної підтримки водіїв. Ви можете знайти найближчі заправки та парковки за допомогою Google Maps API та переглянути поточну погоду за допомогою OpenWeather API.</p>
+        <p>Для початку використання натисніть кнопку "Почати"</p>
+        <button onclick="startApp()">Почати</button>
+    </div>
+    <div id="appPage" style="display: none;">
+        <h1>Need To Drive</h1>
+        <div class="container">
+            <div id="weather">
+                <h2>Поточна погода</h2>
+                <p>Температура: <span id="temp"></span>°C</p>
+                <p>Опис: <span id="description"></span></p>
+            </div>
+            <div id="map"></div>
     </div>
     <div id="controls">
         <button onclick="toggleMarkers('gas_station')">Найближчі заправки</button>
