@@ -87,7 +87,6 @@
     }
 }
 
-/* Стилі для екранів шириною від 601px (планшети та комп'ютери) */
 @media only screen and (min-width: 601px) {
     body {
         font-family: 'Arial', sans-serif;
