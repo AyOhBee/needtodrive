@@ -174,26 +174,17 @@ function calculateAndDisplayRoute(destination) {
 
     directionsService.route(request, function(result, status) {
         if (status === 'OK') {
-            currentRoute = new google.maps.DirectionsRenderer({
-                map: map,
-                directions: result,
-                suppressMarkers: true
-            });
+            directionsRenderer.setDirections(result);
+            directionsRenderer.setMap(map);
 
             const distance = result.routes[0].legs[0].distance.text;
-            const distanceValue = result.routes[0].legs[0].distance.value;
-            const fuelConsumption = parseFloat(document.getElementById('fuelInput').value);
-            const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100);
+            const distanceValue = result.routes[0].legs[0].distance.value; // Відстань у метрах
+            const fuelConsumption = parseFloat(document.getElementById('fuelInput').value); // Літрів на 100 км
+            const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
 
             const notificationDiv = document.getElementById('notification');
             notificationDiv.innerHTML = `<p>Відстань до обраного пункту: ${distance}</p>`;
             notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
-
-            google.maps.event.addListener(currentRoute, 'click', function() {
-                currentRoute.setMap(null);
-                currentRoute = null;
-                notificationDiv.innerHTML = '';
-            });
         } else {
             window.alert('Directions request failed due to ' + status);
         }
