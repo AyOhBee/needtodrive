@@ -13,6 +13,13 @@ const blueMarkerIcon = {
     url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
 };
 
+function startApp() {
+    document.getElementById("introPage").style.display = "none";
+    document.getElementById("appPage").style.display = "block";
+    // Ініціалізуйте ваш додаток тут, наприклад, викликайте initMap();
+    initMap(); // Приклад
+}
+
 function initMap() {
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer({
