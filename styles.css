@@ -22,7 +22,7 @@ h1 {
     align-items: center;
     width: 90%;
     max-width: 1200px;
-    margin: 20px auto; /* Доданий відступ та автоматичне вирівнювання по центру */
+    margin: 20px auto;
 }
 
 #map, #weather {
@@ -32,7 +32,7 @@ h1 {
 }
 
 #map {
-    height: 300px; /* Зменшено висоту */
+    height: 300px;
     width: 100%;
 }
 
@@ -45,7 +45,7 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 300px; /* Зменшено висоту */
+    height: 300px;
 }
 
 #weather h2 {
@@ -88,46 +88,45 @@ h1 {
 /* Стилі для екранів шириною до 600px (мобільні пристрої) */
 @media only screen and (max-width: 600px) {
     h1 {
-        font-size: 18px; /* Зменшено розмір шрифту */
+        font-size: 18px;
     }
 
     .container {
         width: 90%;
         max-width: 90%;
-        margin: 20px auto; /* Доданий відступ та автоматичне вирівнювання по центру */
-        flex-direction: column; /* Змінено на flex-direction: column */
+        margin: 20px auto;
     }
 
     #weather {
-        padding: 10px; /* Зменшено відступи */
-        font-size: 18px; /* Зменшено розмір шрифту */
-        margin-bottom: 10px; /* Зменшено відступ */
+        padding: 10px;
+        font-size: 18px;
+        margin-bottom: 10px;
     }
 
     #weather h2 {
-        font-size: 20px; /* Зменшено розмір шрифту */
+        font-size: 20px;
     }
 
     #weather p {
-        margin: 3px 0; /* Зменшено відступи */
+        margin: 3px 0;
     }
 
     #controls button {
         padding: 15px 30px;
-        font-size: 14px; /* Зменшено розмір шрифту */
+        font-size: 14px;
     }
 }
 
 /* Стилі для екранів шириною від 601px (планшети та комп'ютери) */
 @media only screen and (min-width: 601px) {
     .container {
-        flex-direction: row; /* Змінено на flex-direction: row */
+        flex-direction: row;
         justify-content: space-between;
         align-items: stretch;
     }
 
     #map, #weather {
-        height: 300px; /* Зменшено висоту */
-        width: calc(50% - 10px); /* Змінено ширину */
+        height: 300px;
+        width: 45%; /* Збільшено ширину */
     }
 }
