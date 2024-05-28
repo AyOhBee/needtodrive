@@ -149,11 +149,11 @@ function createMarker(place) {
             activeMarker = null;
         } else {
             if (currentRoute) {
-                currentRoute.setMap(null);
+                clearRouteAndInfo();
             }
-            clearNotification();
-            calculateAndDisplayRoute(marker.position);
             activeMarker = marker;
+            showPlaceInfo(place);
+            calculateAndDisplayRoute(marker.position);
         }
     });
 }
@@ -163,6 +163,24 @@ function clearMarkers() {
         currentMarkers[i].setMap(null);
     }
     currentMarkers = [];
+}
+
+function showPlaceInfo(place) {
+    const notificationDiv = document.getElementById('notification');
+    notificationDiv.innerHTML = `<p>Інформація про місце: ${place.name}</p>`;
+}
+
+function clearRouteAndInfo() {
+    if (currentRoute) {
+        currentRoute.setMap(null);
+        currentRoute = null;
+    }
+    clearNotification();
+}
+
+function clearNotification() {
+    const notificationDiv = document.getElementById('notification');
+    notificationDiv.innerHTML = '';
 }
 
 function calculateAndDisplayRoute(destination) {
@@ -185,25 +203,12 @@ function calculateAndDisplayRoute(destination) {
             const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
 
             const notificationDiv = document.getElementById('notification');
-            notificationDiv.innerHTML = `<p>Відстань до обраного пункту: ${distance}</p>`;
+            notificationDiv.innerHTML += `<p>Відстань до обраного пункту: ${distance}</p>`;
             notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
         } else {
             window.alert('Directions request failed due to ' + status);
         }
     });
-}
-
-function clearRouteAndInfo() {
-    if (currentRoute) {
-        currentRoute.setMap(null);
-        currentRoute = null;
-    }
-    clearNotification();
-}
-
-function clearNotification() {
-    const notificationDiv = document.getElementById('notification');
-    notificationDiv.innerHTML = '';
 }
 
 function updateFuelConsumption() {
