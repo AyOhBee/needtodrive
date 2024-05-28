@@ -7,6 +7,7 @@ let directionsService;
 let directionsRenderer;
 let userMarker;
 let currentRoute;
+let activeMarker = null; // Додаємо змінну для зберігання активного маркера
 
 const blueMarkerIcon = {
     url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
@@ -15,7 +16,7 @@ const blueMarkerIcon = {
 function initMap() {
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer({
-        suppressMarkers: true
+        suppressMarkers: true // Прибираємо точки A та B
     });
 
     if (navigator.geolocation) {
@@ -52,7 +53,7 @@ function initMap() {
 }
 
 function handleLocationError(browserHasGeolocation, error = null) {
-    const kharkivLocation = { lat: 49.9935, lng: 36.2304 };
+    const kharkivLocation = { lat: 49.9935, lng: 36.2304 }; // Координати Харкова
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: kharkivLocation,
@@ -143,17 +144,16 @@ function createMarker(place) {
     currentMarkers.push(marker);
 
     google.maps.event.addListener(marker, 'click', function() {
-        infowindow = new google.maps.InfoWindow();
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-
-        if (currentRoute) {
-            currentRoute.setMap(null);
-            currentRoute = null;
-            const notificationDiv = document.getElementById('notification');
-            notificationDiv.innerHTML = '';
+        if (activeMarker === marker) {
+            clearRouteAndInfo();
+            activeMarker = null;
         } else {
+            if (currentRoute) {
+                currentRoute.setMap(null);
+            }
+            clearNotification();
             calculateAndDisplayRoute(marker.position);
+            activeMarker = marker;
         }
     });
 }
@@ -177,6 +177,8 @@ function calculateAndDisplayRoute(destination) {
             directionsRenderer.setDirections(result);
             directionsRenderer.setMap(map);
 
+            currentRoute = directionsRenderer;
+
             const distance = result.routes[0].legs[0].distance.text;
             const distanceValue = result.routes[0].legs[0].distance.value; // Відстань у метрах
             const fuelConsumption = parseFloat(document.getElementById('fuelInput').value); // Літрів на 100 км
@@ -189,6 +191,19 @@ function calculateAndDisplayRoute(destination) {
             window.alert('Directions request failed due to ' + status);
         }
     });
+}
+
+function clearRouteAndInfo() {
+    if (currentRoute) {
+        currentRoute.setMap(null);
+        currentRoute = null;
+    }
+    clearNotification();
+}
+
+function clearNotification() {
+    const notificationDiv = document.getElementById('notification');
+    notificationDiv.innerHTML = '';
 }
 
 function updateFuelConsumption() {
