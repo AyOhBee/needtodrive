@@ -128,3 +128,13 @@ h1 {
         font-size: 18px;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .weather-section {
+        width: 90%;
+    }
+
+    .map-section {
+        width: 90%;
+    }
+}
