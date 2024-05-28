@@ -1,140 +1,180 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-h1 {
-    color: #333;
-    margin-top: 20px;
-    text-align: center;
-    font-size: 24px;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px 0;
-}
-
-#map {
-    height: 400px;
-    width: 100%;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-}
-
-#weather {
-    background-color: white;
-    padding: 20px;
-    width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    font-size: 24px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-#weather h2 {
-    margin-top: 0;
-    color: #333;
-}
-
-#weather p {
-    margin: 5px 0;
-    color: #666;
-}
-
-#controls {
-    margin-top: 20px;
-    text-align: center;
-}
-
-#controls button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-#controls button:hover {
-    background-color: #0056b3;
-}
-
-#notification {
-    color: red;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-@media (min-width: 601px) {
-    .container {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: stretch;
-    }
-
-    #weather {
-        width: 30%;
-        margin-right: 20px;
-        margin-bottom: 0;
-        height: auto; 
-    }
-
-    #map {
-        width: 65%;
-        height: 400px;
-    }
-}
-
-@media (max-width: 600px) {
-    .container {
+@media only screen and (max-width: 600px) {
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
     }
 
-    #weather {
+    h1 {
+        color: #333;
+        margin-top: 20px;
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 90%;
-        margin: 20px auto;
-        height: auto; /* Прибираємо підлаштування по висоті */
+        max-width: 90%;
+        margin: 20px 0;
     }
 
     #map {
-        width: 90%;
         height: 300px;
+        width: 100%;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+
+    #weather {
+        background-color: white;
+        padding: 20px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        font-size: 24px;
         margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #weather h2 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    #weather p {
+        margin: 5px 0;
+        color: #666;
+    }
+
+    #controls {
+        margin-top: 20px;
+        text-align: center;
     }
 
     #controls button {
+        background-color: #007bff;
+        color: white;
+        border: none;
         padding: 15px 30px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
         font-size: 18px;
+        transition: background-color 0.3s;
+    }
+
+    #controls button:hover {
+        background-color: #0056b3;
+    }
+
+    #notification {
+        color: red;
+        font-weight: bold;
+        margin-top: 20px;
     }
 }
 
-@media only screen and (max-width: 600px) {
-    .weather-section {
-        width: 90%;
+/* Стилі для екранів шириною від 601px (планшети та комп'ютери) */
+@media only screen and (min-width: 601px) {
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
-    .map-section {
+    h1 {
+        color: #333;
+        margin-top: 20px;
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: stretch;
         width: 90%;
+        max-width: 1200px;
+        margin: 20px 0;
+    }
+
+    #map {
+        height: 400px;
+        width: 65%;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+
+    #weather {
+        background-color: white;
+        padding: 20px;
+        width: 30%;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        font-size: 24px;
+        margin-right: 20px;
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #weather h2 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    #weather p {
+        margin: 5px 0;
+        color: #666;
+    }
+
+    #controls {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #controls button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    #controls button:hover {
+        background-color: #0056b3;
+    }
+
+    #notification {
+        color: red;
+        font-weight: bold;
+        margin-top: 20px;
     }
 }
