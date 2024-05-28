@@ -1,3 +1,4 @@
+/* Стилі для екранів шириною до 600px (мобільні пристрої) */
 @media only screen and (max-width: 600px) {
     body {
         font-family: 'Arial', sans-serif;
@@ -23,7 +24,7 @@
         align-items: center;
         width: 90%;
         max-width: 90%;
-        margin: 20px 0;
+        margin: 20px auto; /* Доданий відступ та автоматичне вирівнювання по центру */
     }
 
     #map {
@@ -37,7 +38,7 @@
     #weather {
         background-color: white;
         padding: 20px;
-        width: 100%;
+        width: 90%; /* Змінено ширину на 90% */
         border: 1px solid #ccc;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -87,6 +88,7 @@
     }
 }
 
+/* Стилі для екранів шириною від 601px (планшети та комп'ютери) */
 @media only screen and (min-width: 601px) {
     body {
         font-family: 'Arial', sans-serif;
@@ -113,7 +115,7 @@
         align-items: stretch;
         width: 90%;
         max-width: 1200px;
-        margin: 20px 0;
+        margin: 20px auto; /* Доданий відступ та автоматичне вирівнювання по центру */
     }
 
     #map {
@@ -133,8 +135,7 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
         font-size: 24px;
-        margin-right: 20px;
-        margin-bottom: 0;
+        margin-bottom: 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
