@@ -18,8 +18,9 @@ h1 {
 
 .container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row; /* Змінено на flex-direction: row */
+    justify-content: space-between;
+    align-items: stretch;
     width: 90%;
     max-width: 1200px;
     margin: 20px auto; /* Доданий відступ та автоматичне вирівнювання по центру */
@@ -29,17 +30,16 @@ h1 {
     border: 2px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
+    width: calc(50% - 10px); /* Змінено ширину */
 }
 
 #map {
     height: 400px;
-    width: 100%;
 }
 
 #weather {
     background-color: white;
     padding: 20px;
-    width: 100%;
     font-size: 24px;
     margin-bottom: 20px;
     display: flex;
@@ -94,6 +94,7 @@ h1 {
         width: 90%;
         max-width: 90%;
         margin: 20px auto; /* Доданий відступ та автоматичне вирівнювання по центру */
+        flex-direction: column; /* Змінено на flex-direction: column */
     }
 
     #weather {
