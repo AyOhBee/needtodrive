@@ -121,12 +121,13 @@ h1 {
 @media only screen and (min-width: 601px) {
     .container {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: stretch;
     }
 
     #map, #weather {
         height: 300px;
-        width: 100%; /* Збільшено ширину */
+        width: 45%; /* Збільшено ширину */
+        margin: 0 10px; /* Додано відступ між блоками */
     }
 }
