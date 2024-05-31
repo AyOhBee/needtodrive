@@ -22,7 +22,7 @@ h1 {
     align-items: center;
     width: 90%;
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 20px auto; /* Доданий відступ та автоматичне вирівнювання по центру */
 }
 
 #map, #weather {
@@ -32,7 +32,7 @@ h1 {
 }
 
 #map {
-    height: 300px;
+    height: 400px;
     width: 100%;
 }
 
@@ -45,7 +45,6 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 300px;
 }
 
 #weather h2 {
@@ -88,32 +87,32 @@ h1 {
 /* Стилі для екранів шириною до 600px (мобільні пристрої) */
 @media only screen and (max-width: 600px) {
     h1 {
-        font-size: 18px;
+        font-size: 18px; /* Зменшено розмір шрифту */
     }
 
     .container {
         width: 90%;
         max-width: 90%;
-        margin: 20px auto;
+        margin: 20px auto; /* Доданий відступ та автоматичне вирівнювання по центру */
     }
 
     #weather {
-        padding: 10px;
-        font-size: 18px;
-        margin-bottom: 10px;
+        padding: 10px; /* Зменшено відступи */
+        font-size: 18px; /* Зменшено розмір шрифту */
+        margin-bottom: 10px; /* Зменшено відступ */
     }
 
     #weather h2 {
-        font-size: 20px;
+        font-size: 20px; /* Зменшено розмір шрифту */
     }
 
     #weather p {
-        margin: 3px 0;
+        margin: 3px 0; /* Зменшено відступи */
     }
 
     #controls button {
         padding: 15px 30px;
-        font-size: 14px;
+        font-size: 14px; /* Зменшено розмір шрифту */
     }
 }
 
@@ -121,13 +120,25 @@ h1 {
 @media only screen and (min-width: 601px) {
     .container {
         flex-direction: row;
-        justify-content: space-evenly;
-        align-items: stretch;
+        justify-content: space-around; /* Розподіл простору навколо елементів */
+        align-items: stretch; /* Розтягування елементів до висоти контейнера */
     }
 
     #map, #weather {
         height: 300px;
-        width: 45%; /* Збільшено ширину */
-        margin: 0 10px; /* Додано відступ між блоками */
+        width: 48%; /* Змінено ширину мапи та погоди */
+    }
+
+    #weather {
+        padding: 20px;
+        font-size: 20px; /* Зменшено розмір шрифту */
+    }
+
+    #weather h2 {
+        font-size: 24px; /* Зменшено розмір шрифту */
+    }
+
+    #weather p {
+        font-size: 16px; /* Зменшено розмір шрифту */
     }
 }
