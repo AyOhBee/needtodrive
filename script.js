@@ -7,7 +7,7 @@ let directionsService;
 let directionsRenderer;
 let userMarker;
 let currentRoute;
-let activeMarker = null; // Додаємо змінну для зберігання активного маркера
+let activeMarker = null;
 
 const blueMarkerIcon = {
     url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
@@ -16,14 +16,13 @@ const blueMarkerIcon = {
 function startApp() {
     document.getElementById("introPage").style.display = "none";
     document.getElementById("appPage").style.display = "block";
-    // Ініціалізуйте ваш додаток тут, наприклад, викликайте initMap();
-    initMap(); // Приклад
+    initMap();
 }
 
 function initMap() {
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer({
-        suppressMarkers: true // Прибираємо точки A та B
+        suppressMarkers: true
     });
 
     if (navigator.geolocation) {
@@ -60,7 +59,7 @@ function initMap() {
 }
 
 function handleLocationError(browserHasGeolocation, error = null) {
-    const kharkivLocation = { lat: 49.9935, lng: 36.2304 }; // Координати Харкова
+    const kharkivLocation = { lat: 49.9935, lng: 36.2304 };
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: kharkivLocation,
@@ -219,12 +218,12 @@ function calculateAndDisplayRoute(destination) {
 }
 
 function updateFuelConsumption() {
-    const distance = calculateDistance(); // Підрахунок відстані функцією calculateDistance
-    const fuelInput = document.getElementById('fuelInput').value;
-    const fuelConsumption = (distance / 100) * fuelInput;
+    if (currentRoute) {
+        const distanceValue = currentRoute.routes[0].legs[0].distance.value; // Відстань у метрах
+        const fuelConsumption = parseFloat(document.getElementById('fuelInput').value); // Літрів на 100 км
+        const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
 
-    const notification = document.getElementById('notification');
-    notification.innerHTML = ''; // Очищення попереднього результату
-    notification.innerHTML = `Витрати палива: ${fuelConsumption.toFixed(2)} літрів`;
+        const notificationDiv = document.getElementById('notification');
+        notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
+    }
 }
-
