@@ -219,7 +219,12 @@ function calculateAndDisplayRoute(destination) {
 }
 
 function updateFuelConsumption() {
-    if (currentRoute) {
-        calculateAndDisplayRoute(currentRoute.getDirections().routes[0].legs[0].end_location);
-    }
+    const distance = calculateDistance(); // Підрахунок відстані функцією calculateDistance
+    const fuelInput = document.getElementById('fuelInput').value;
+    const fuelConsumption = (distance / 100) * fuelInput;
+
+    const notification = document.getElementById('notification');
+    notification.innerHTML = ''; // Очищення попереднього результату
+    notification.innerHTML = `Витрати палива: ${fuelConsumption.toFixed(2)} літрів`;
 }
+
