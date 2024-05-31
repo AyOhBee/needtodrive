@@ -219,11 +219,11 @@ function calculateAndDisplayRoute(destination) {
 
 function updateFuelConsumption() {
     if (currentRoute) {
-        const distanceValue = currentRoute.routes[0].legs[0].distance.value; // Відстань у метрах
+        const distanceValue = currentRoute.directions.routes[0].legs[0].distance.value; // Відстань у метрах
         const fuelConsumption = parseFloat(document.getElementById('fuelInput').value); // Літрів на 100 км
         const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
 
         const notificationDiv = document.getElementById('notification');
-        notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
+        notificationDiv.innerHTML = `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`; // Очищення та додавання нового результату
     }
 }
