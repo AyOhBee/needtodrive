@@ -121,7 +121,7 @@ h1 {
 @media only screen and (min-width: 601px) {
     .container {
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-evenly;
         align-items: stretch;
     }
 
