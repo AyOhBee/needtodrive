@@ -216,6 +216,8 @@ function calculateAndDisplayRoute(destination) {
             const notificationDiv = document.getElementById('notification');
             notificationDiv.innerHTML += `<p>Відстань до обраного пункту: ${distance}</p>`;
             notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
+            notificationDiv.dataset.distanceInfo = `<p>Відстань до обраного пункту: ${distance}</p>`;
+            notificationDiv.dataset.fuelInfo = `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
         } else {
             window.alert('Directions request failed due to ' + status);
         }
@@ -230,6 +232,8 @@ function updateFuelConsumption() {
 
         const notificationDiv = document.getElementById('notification');
         notificationDiv.innerHTML = notificationDiv.dataset.placeInfo || ''; // Відновлення інформації про місце
+        notificationDiv.innerHTML += notificationDiv.dataset.distanceInfo || ''; // Відновлення інформації про відстань
         notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
+        notificationDiv.dataset.fuelInfo = `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
     }
 }
