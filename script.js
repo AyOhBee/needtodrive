@@ -174,6 +174,7 @@ function clearMarkers() {
 function showPlaceInfo(place) {
     const notificationDiv = document.getElementById('notification');
     notificationDiv.innerHTML = `<p>Інформація про місце: ${place.name}</p>`;
+    notificationDiv.dataset.placeInfo = `<p>Інформація про місце: ${place.name}</p>`;
 }
 
 function clearRouteAndInfo() {
@@ -181,12 +182,16 @@ function clearRouteAndInfo() {
         currentRoute.setMap(null);
         currentRoute = null;
     }
-    clearNotification();
+    clearNotification(false);
 }
 
-function clearNotification() {
+function clearNotification(clearInfo = true) {
     const notificationDiv = document.getElementById('notification');
-    notificationDiv.innerHTML = '';
+    if (clearInfo) {
+        notificationDiv.innerHTML = '';
+    } else {
+        notificationDiv.innerHTML = notificationDiv.dataset.placeInfo || '';
+    }
 }
 
 function calculateAndDisplayRoute(destination) {
@@ -224,6 +229,7 @@ function updateFuelConsumption() {
         const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
 
         const notificationDiv = document.getElementById('notification');
-        notificationDiv.innerHTML = `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`; // Очищення та додавання нового результату
+        notificationDiv.innerHTML = notificationDiv.dataset.placeInfo || ''; // Відновлення інформації про місце
+        notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
     }
 }
