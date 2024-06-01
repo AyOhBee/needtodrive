@@ -89,16 +89,17 @@ function handleLocationError(browserHasGeolocation, error = null) {
 }
 
 function getWeather(lat, lon) {
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=Europe/Kiev`)
+    const apiKey = '0a282b27221cd0e994be547d9054959a';
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=ua`)
         .then(response => response.json())
         .then(data => {
             const weatherDiv = document.getElementById('weather');
             const weatherHTML = `
                 <h2>Погода</h2>
-                <p>Температура: ${data.current_weather.temperature}°C</p>
-                <p>Погода: ${data.current_weather.weathercode}</p>
-                <p>Вологість: ${data.current_weather.relativehumidity}%</p>
-                <p>Швидкість вітру: ${data.current_weather.windspeed} м/с</p>
+                <p>Температура: ${data.main.temp}°C</p>
+                <p>Погода: ${data.weather[0].description}</p>
+                <p>Вологість: ${data.main.humidity}%</p>
+                <p>Швидкість вітру: ${data.wind.speed} м/с</p>
             `;
             weatherDiv.innerHTML = weatherHTML;
         })
