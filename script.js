@@ -1,8 +1,5 @@
 let map;
 let service;
-let infowindow;
-let currentMarkers = [];
-let currentType = '';
 let directionsService;
 let directionsRenderer;
 let userMarker;
@@ -82,14 +79,20 @@ function handleLocationError(browserHasGeolocation, error = null) {
 
     getWeather(kharkivLocation.lat, kharkivLocation.lng);
 
-    const notificationDiv = document.getElementById('notification');
-    notificationDiv.textContent = browserHasGeolocation ?
-        'Error: The Geolocation service failed. Please allow location access.' :
-        'Error: Your browser doesn\'t support geolocation.';
+    const errorDiv = document.getElementById('error');
+    if (browserHasGeolocation) {
+        if (error.code === error.PERMISSION_DENIED) {
+            errorDiv.innerHTML = 'Будь ласка, увімкніть геолокацію у вашому браузері.';
+        } else {
+            errorDiv.innerHTML = 'Помилка: Не вдалося визначити місцезнаходження.';
+        }
+    } else {
+        errorDiv.innerHTML = 'Помилка: Ваш браузер не підтримує геолокацію.';
+    }
 }
 
 function getWeather(lat, lon) {
-    const apiKey = '0a282b27221cd0e994be547d9054959a';
+    const apiKey = 'YOUR_OPENWEATHER_API_KEY';
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=ua`)
         .then(response => response.json())
         .then(data => {
