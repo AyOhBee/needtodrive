@@ -8,6 +8,7 @@ let directionsRenderer;
 let userMarker;
 let currentRoute;
 let activeMarker = null;
+let activeInfoWindow = null;
 
 const blueMarkerIcon = {
     url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
@@ -138,6 +139,9 @@ function createMarker(place) {
         if (activeMarker) {
             activeMarker.setAnimation(null);
         }
+        if (activeInfoWindow) {
+            activeInfoWindow.close();
+        }
         marker.setAnimation(google.maps.Animation.BOUNCE);
         activeMarker = marker;
 
@@ -145,6 +149,7 @@ function createMarker(place) {
             content: `<h3>${place.name}</h3><p>${place.vicinity}</p>`
         });
         infoWindow.open(map, marker);
+        activeInfoWindow = infoWindow;
         calculateAndDisplayRoute(marker.getPosition());
     });
 
@@ -156,6 +161,9 @@ function clearMarkers() {
         currentMarkers[i].setMap(null);
     }
     currentMarkers = [];
+    if (activeInfoWindow) {
+        activeInfoWindow.close();
+    }
 }
 
 function calculateAndDisplayRoute(destination) {
@@ -182,6 +190,7 @@ function updateFuelConsumption() {
         const fuelConsumption = document.getElementById('fuelInput').value;
         const distance = currentRoute.routes[0].legs[0].distance.value / 1000; // distance in km
         const fuelUsed = (fuelConsumption * distance) / 100;
-        alert(`Ви використаєте приблизно ${fuelUsed.toFixed(2)} літрів палива на цей маршрут.`);
+        const fuelResultDiv = document.getElementById('fuelConsumptionResult');
+        fuelResultDiv.textContent = `Ви використаєте приблизно ${fuelUsed.toFixed(2)} літрів палива на цей маршрут.`;
     }
 }
