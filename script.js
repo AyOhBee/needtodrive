@@ -82,36 +82,26 @@ function handleLocationError(browserHasGeolocation, error = null) {
     getWeather(kharkivLocation.lat, kharkivLocation.lng);
 
     const notificationDiv = document.getElementById('notification');
-    if (browserHasGeolocation) {
-        if (error.code === error.PERMISSION_DENIED) {
-            notificationDiv.innerHTML = '<p>Будь ласка, увімкніть геолокацію у вашому браузері.</p>';
-        } else {
-            notificationDiv.innerHTML = '<p>Помилка: Не вдалося визначити місцезнаходження.</p>';
-        }
-    } else {
-        notificationDiv.innerHTML = '<p>Помилка: Ваш браузер не підтримує геолокацію.</p>';
-    }
+    notificationDiv.textContent = browserHasGeolocation ?
+        'Error: The Geolocation service failed. Please allow location access.' :
+        'Error: Your browser doesn\'t support geolocation.';
 }
 
 function getWeather(lat, lon) {
-    const apiKey = '0a282b27221cd0e994be547d9054959a';
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=uk&appid=${apiKey}`;
-
-    fetch(url)
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=Europe/Kiev`)
         .then(response => response.json())
         .then(data => {
             const weatherDiv = document.getElementById('weather');
-            weatherDiv.innerHTML = `
-                <h2>Погода в ${data.name}</h2>
-                <p>Температура: ${data.main.temp}°C</p>
-                <p>Погода: ${data.weather[0].description}</p>
-                <p>Вологість: ${data.main.humidity}%</p>
-                <p>Швидкість вітру: ${data.wind.speed} м/с</p>
+            const weatherHTML = `
+                <h2>Погода</h2>
+                <p>Температура: ${data.current_weather.temperature}°C</p>
+                <p>Погода: ${data.current_weather.weathercode}</p>
+                <p>Вологість: ${data.current_weather.relativehumidity}%</p>
+                <p>Швидкість вітру: ${data.current_weather.windspeed} м/с</p>
             `;
+            weatherDiv.innerHTML = weatherHTML;
         })
-        .catch(error => {
-            console.error('Помилка при отриманні даних про погоду:', error);
-        });
+        .catch(error => console.error('Error fetching weather data:', error));
 }
 
 function toggleMarkers(type) {
@@ -121,47 +111,44 @@ function toggleMarkers(type) {
     } else {
         clearMarkers();
         currentType = type;
-        findNearbyPlaces(type);
-    }
-}
-
-function findNearbyPlaces(type) {
-    const request = {
-        location: map.getCenter(),
-        radius: '5000',
-        type: [type]
-    };
-
-    service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (let i = 0; i < results.length; i++) {
-                createMarker(results[i]);
+        const request = {
+            location: map.getCenter(),
+            radius: '5000',
+            type: [type]
+        };
+        service = new google.maps.places.PlacesService(map);
+        service.nearbySearch(request, (results, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (let i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function createMarker(place) {
     const marker = new google.maps.Marker({
         map: map,
-        position: place.geometry.location
+        position: place.geometry.location,
+        title: place.name
     });
-    currentMarkers.push(marker);
 
-    google.maps.event.addListener(marker, 'click', function() {
-        if (activeMarker === marker) {
-            clearRouteAndInfo();
-            activeMarker = null;
-        } else {
-            if (currentRoute) {
-                clearRouteAndInfo();
-            }
-            activeMarker = marker;
-            showPlaceInfo(place);
-            calculateAndDisplayRoute(marker.position);
+    google.maps.event.addListener(marker, 'click', () => {
+        if (activeMarker) {
+            activeMarker.setAnimation(null);
         }
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        activeMarker = marker;
+
+        const infoWindow = new google.maps.InfoWindow({
+            content: `<h3>${place.name}</h3><p>${place.vicinity}</p>`
+        });
+        infoWindow.open(map, marker);
+        calculateAndDisplayRoute(marker.getPosition());
     });
+
+    currentMarkers.push(marker);
 }
 
 function clearMarkers() {
@@ -171,69 +158,30 @@ function clearMarkers() {
     currentMarkers = [];
 }
 
-function showPlaceInfo(place) {
-    const notificationDiv = document.getElementById('notification');
-    notificationDiv.innerHTML = `<p>Інформація про місце: ${place.name}</p>`;
-    notificationDiv.dataset.placeInfo = `<p>Інформація про місце: ${place.name}</p>`;
-}
-
-function clearRouteAndInfo() {
-    if (currentRoute) {
-        currentRoute.setMap(null);
-        currentRoute = null;
-    }
-    clearNotification(false);
-}
-
-function clearNotification(clearInfo = true) {
-    const notificationDiv = document.getElementById('notification');
-    if (clearInfo) {
-        notificationDiv.innerHTML = '';
-    } else {
-        notificationDiv.innerHTML = notificationDiv.dataset.placeInfo || '';
-    }
-}
-
 function calculateAndDisplayRoute(destination) {
-    const request = {
-        origin: userMarker.getPosition(),
-        destination: destination,
-        travelMode: 'DRIVING'
-    };
-
-    directionsService.route(request, function(result, status) {
-        if (status === 'OK') {
-            directionsRenderer.setDirections(result);
-            directionsRenderer.setMap(map);
-
-            currentRoute = directionsRenderer;
-
-            const distance = result.routes[0].legs[0].distance.text;
-            const distanceValue = result.routes[0].legs[0].distance.value; // Відстань у метрах
-            const fuelConsumption = parseFloat(document.getElementById('fuelInput').value); // Літрів на 100 км
-            const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
-
-            const notificationDiv = document.getElementById('notification');
-            notificationDiv.innerHTML += `<p>Відстань до обраного пункту: ${distance}</p>`;
-            notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
-            notificationDiv.dataset.distanceInfo = `<p>Відстань до обраного пункту: ${distance}</p>`;
-            notificationDiv.dataset.fuelInfo = `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
-        } else {
-            window.alert('Directions request failed due to ' + status);
-        }
-    });
+    if (userMarker && userMarker.getPosition()) {
+        const request = {
+            origin: userMarker.getPosition(),
+            destination: destination,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, (result, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(result);
+                currentRoute = result;
+                updateFuelConsumption();
+            } else {
+                console.error('Directions request failed due to ' + status);
+            }
+        });
+    }
 }
 
 function updateFuelConsumption() {
     if (currentRoute) {
-        const distanceValue = currentRoute.directions.routes[0].legs[0].distance.value; // Відстань у метрах
-        const fuelConsumption = parseFloat(document.getElementById('fuelInput').value); // Літрів на 100 км
-        const fuelNeeded = (distanceValue / 1000) * (fuelConsumption / 100); // Обчислення витрат палива
-
-        const notificationDiv = document.getElementById('notification');
-        notificationDiv.innerHTML = notificationDiv.dataset.placeInfo || ''; // Відновлення інформації про місце
-        notificationDiv.innerHTML += notificationDiv.dataset.distanceInfo || ''; // Відновлення інформації про відстань
-        notificationDiv.innerHTML += `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
-        notificationDiv.dataset.fuelInfo = `<p>Ймовірна витрата палива: ${fuelNeeded.toFixed(2)} л</p>`;
+        const fuelConsumption = document.getElementById('fuelInput').value;
+        const distance = currentRoute.routes[0].legs[0].distance.value / 1000; // distance in km
+        const fuelUsed = (fuelConsumption * distance) / 100;
+        alert(`Ви використаєте приблизно ${fuelUsed.toFixed(2)} літрів палива на цей маршрут.`);
     }
 }
