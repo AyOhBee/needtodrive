@@ -92,7 +92,7 @@ function handleLocationError(browserHasGeolocation, error = null) {
 }
 
 function getWeather(lat, lon) {
-    const apiKey = 'YOUR_OPENWEATHER_API_KEY';
+    const apiKey = '0a282b27221cd0e994be547d9054959a';
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=ua`)
         .then(response => response.json())
         .then(data => {
