@@ -1,5 +1,8 @@
 let map;
 let service;
+let infowindow;
+let currentMarkers = [];
+let currentType = '';
 let directionsService;
 let directionsRenderer;
 let userMarker;
@@ -79,16 +82,10 @@ function handleLocationError(browserHasGeolocation, error = null) {
 
     getWeather(kharkivLocation.lat, kharkivLocation.lng);
 
-    const errorDiv = document.getElementById('error');
-    if (browserHasGeolocation) {
-        if (error.code === error.PERMISSION_DENIED) {
-            errorDiv.innerHTML = 'Будь ласка, увімкніть геолокацію у вашому браузері.';
-        } else {
-            errorDiv.innerHTML = 'Помилка: Не вдалося визначити місцезнаходження.';
-        }
-    } else {
-        errorDiv.innerHTML = 'Помилка: Ваш браузер не підтримує геолокацію.';
-    }
+    const notificationDiv = document.getElementById('notification');
+    notificationDiv.textContent = browserHasGeolocation ?
+        'Error: The Geolocation service failed. Please allow location access.' :
+        'Error: Your browser doesn\'t support geolocation.';
 }
 
 function getWeather(lat, lon) {
