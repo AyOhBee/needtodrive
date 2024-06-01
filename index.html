@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeedToDrive</title>
+    <title>Need To Drive</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADre9i0W_86odCBBI-6pNRgoFlkkeMva8&libraries=places"></script>
-    <script defer src="script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADre9i0W_86odCBBI-6pNRgoFlkkeMva8&libraries=places&callback=initMap" async defer></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div id="introPage">
-        <h1>Ласкаво просимо до NeedToDrive</h1>
-        <p>Цей сайт допоможе вам знайти найближчі заправки та паркінги, а також підрахувати витрати палива на ваш маршрут.</p>
-        <button id="startButton" onclick="startApp()">Почати</button>
+        <h1>Ласкаво просимо до Need To Drive</h1>
+        <p>Цей сайт допоможе вам знайти найближчі заправки та парковки, а також перевірити погоду у вашому місцезнаходженні.</p>
+        <button onclick="startApp()">Почати</button>
     </div>
     <div id="appPage" style="display: none;">
         <h1>Need To Drive</h1>
@@ -20,16 +20,16 @@
             <div id="weather"></div>
             <div id="map"></div>
         </div>
-        <div id="controls">
+        <div>
             <button onclick="toggleMarkers('gas_station')">Найближчі заправки</button>
             <button onclick="toggleMarkers('parking')">Найближчі парковки</button>
         </div>
         <div id="fuelInputContainer">
             <label for="fuelInput">Середня витрата палива (л/100 км):</label>
-            <input type="number" id="fuelInput" value="5" oninput="updateFuelConsumption()" min="3" max="25">
+            <input type="number" id="fuelInput" value="5" min="3" max="25" step="1">
             <div id="fuelConsumptionResult"></div>
         </div>
-        <div id="notification"></div>
+        <div id="error"></div>
     </div>
 </body>
 </html>
