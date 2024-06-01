@@ -1,11 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
     margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 h1 {
@@ -17,22 +18,22 @@ h1 {
 
 .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     gap: 20px;
     flex-wrap: wrap;
-    width: 100%;
+    width: 90%;
     max-width: 1200px;
     margin: 20px auto;
 }
 
 #weather, #map {
-    flex: 1;
-    margin: 0 10px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 1 1 45%;
+    min-width: 45%;
+    height: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
 #map {
@@ -51,8 +52,7 @@ h1 {
 #weather h2 {
     margin-top: 0;
     color: #333;
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    font-size: 22px;
 }
 
 #weather p {
@@ -76,7 +76,7 @@ h1 {
     margin: 5px;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 16px;
     transition: background-color 0.3s, transform 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -111,7 +111,7 @@ h1 {
 }
 
 #fuelConsumptionResult {
-    font-size: 1.2em;
+    font-size: 18px;
     color: #333;
     margin-top: 10px;
 }
@@ -152,13 +152,8 @@ h1 {
         padding: 15px 30px;
         font-size: 14px;
     }
-
-    #error {
-        color: red;
-        font-size: 1.2em;
-        margin-top: 20px;
-    }
 }
+
 /* Стилі для початкової сторінки */
 #introPage {
     background-color: #007bff;
