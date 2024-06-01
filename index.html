@@ -1,79 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Need To Drive</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-        .weather,
-        #map {
-            flex: 1 1 45%;
-            min-width: 300px;
-            max-width: 45%;
-            height: 400px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        #map {
-            min-height: 400px;
-        }
-        .weather {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-        }
-        #controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        #notification {
-            margin: 20px 0;
-            color: red;
-        }
-    </style>
+    <title>NeedToDrive</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADre9i0W_86odCBBI-6pNRgoFlkkeMva8&libraries=places"></script>
+    <script defer src="script.js"></script>
 </head>
 <body>
     <div id="introPage">
-        <h1>Need To Drive</h1>
-        <button onclick="startApp()">Start</button>
+        <h1>Ласкаво просимо до NeedToDrive</h1>
+        <p>Цей сайт допоможе вам знайти найближчі заправки та паркінги, а також підрахувати витрати палива на ваш маршрут.</p>
+        <button id="startButton" onclick="startApp()">Почати</button>
     </div>
-    <div id="appPage" style="display:none;">
+    <div id="appPage" style="display: none;">
+        <h1>Need To Drive</h1>
         <div class="container">
-            <div id="weather" class="weather"></div>
+            <div id="weather"></div>
             <div id="map"></div>
         </div>
         <div id="controls">
             <button onclick="toggleMarkers('gas_station')">Найближчі заправки</button>
             <button onclick="toggleMarkers('parking')">Найближчі парковки</button>
-            <div>
-                <label for="fuelInput">Середня витрата палива (л/100 км):</label>
-                <input type="number" id="fuelInput" value="5" oninput="updateFuelConsumption()">
-            </div>
+        </div>
+        <div id="fuelInputContainer">
+            <label for="fuelInput">Середня витрата палива (л/100 км):</label>
+            <input type="number" id="fuelInput" value="5" oninput="updateFuelConsumption()">
         </div>
         <div id="notification"></div>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap" async defer></script>
-    <script src="script.js"></script>
 </body>
 </html>
