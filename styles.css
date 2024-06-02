@@ -127,8 +127,8 @@ h1 {
     }
 
     #weather, #map {
-        width: 100%;
-        min-width: 100%;
+        width: 75%;
+        min-width: 40%;
         margin-bottom: 10px;
     }
 
