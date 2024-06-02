@@ -22,25 +22,22 @@ h1 {
     align-items: flex-start;
     gap: 20px;
     flex-wrap: wrap;
-    width: 90%;
+    width: 1080px;
     max-width: 1200px;
     margin: 20px auto;
 }
 
 #weather, #map {
     flex: 1 1 45%;
-    min-width: 45%;
-    height: 500px;
+    width: 200px;
+    height: 480px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     box-sizing: border-box;
 }
 
-#map {
-    min-height: 500px;
-}
-
 #weather {
+    max-width: 320px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -52,13 +49,13 @@ h1 {
 #weather h2 {
     margin-top: 0;
     color: #333;
-    font-size: 22px;
+    font-size: 32px;
 }
 
 #weather p {
-    margin: 5px 0;
+    margin: 4px 0;
     color: #666;
-    font-size: 18px;
+    font-size: 24px;
 }
 
 #controls {
