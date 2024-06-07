@@ -76,7 +76,6 @@ h1 {
     color: #FEFCFD;
     border: none;
     padding: 15px 30px;
-    margin: 5px;
     border-radius: 50px;
     cursor: pointer;
     font-size: 20px;
@@ -96,10 +95,9 @@ h1 {
 }
 
 #fuelInputContainer {
-    margin: 10px;
-    padding: 5px;
+    margin: 20px;
     border-radius: 50px;
-    height: 120px;
+    height: 140px;
     background: #5D5D81;
     color: #FEFCFD;
     text-align: center;
@@ -108,25 +106,24 @@ h1 {
 #fuelInputContainer label {
     font-size: 20px;
     font-weight: bold;
-    padding-bottom: 20px;
 }
 
 #fuelInputContainer input {
-    height: 15%;
+    height: 20px;
     margin: 8px;
     font-size: 20px;
-    padding: 15px 30px;
-    border-radius: 25px;
+    padding: 4px 8px;
+    border-radius: 20px;
     border: 0px solid;
-    max-width: 80px;
+    max-width: 64px;
     text-align: center;
 }
 
 #fuelConsumptionResult {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     color: #FEFCFD;
-    margin-top: 10px;
+    padding: 10px;
 }
 
 /* Стилі для екранів шириною до 600px (мобільні пристрої) */
@@ -136,79 +133,43 @@ h1 {
     }
 
     .container {
-      display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
       height: 100%;
       width: 100%;
       max-width: 600px;
-      margin: 20px auto;
-  }
-  
-  #weather, #map {
-      flex: 1 1 45%;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
   }
   
   #map {
-      height: 300px;
+      width: 90%;
+      min-height: 420px;
       padding: 5px;
-      border:4px solid#5D5D81
   }
   
   #weather {
-      width: 100%;
-      background-color: #BFCDE0;
-      padding: 20px;
-      border: 4px solid #5D5D81;
+      max-height: 240px;
+      min-width: 90%;
+      padding: 4px;
   }
-  
-  #weather h2 {
-      margin-top: 0;
-      color: #3B3355;
-      font-size: 36px;
-  }
-  
-  #weather p {
-      margin: 4px 0;
-      color: #3B3355;
-      font-size: 20px;
-      font-weight: bold;
-  }
-  
+
   #controls {
-      display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: 20px;
-      margin: 20px 0;
+      padding: 20px;
   }
   
   #controls button {
-      background-color:#5D5D81;
-      color: #FEFCFD;
-      border: none;
-      padding: 12px 24px;
-      margin: 10px;
-      border-radius: 50px;
-      font-size: 20px;
-      transition: background-color 0.3s, transform 0.3s;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+  }
+
+  #fuelInputContainer {
+    border-radius: 10px;
+    height: 220px;
   }
 
   #fuelInputContainer input {
-      height: 25%;
-      margin: 8px;
-      font-size: 24px;
-      padding: 15px 30px;
-      border-radius: 25px;
-      border: 0px solid;
-      max-width: 80px;
-     text-align: center;
+    font-size: 24px;
+    padding: 10px 20px;
+    border-radius: 25px;
   }
 }
 /* Стилі для початкової сторінки */
@@ -226,16 +187,22 @@ h1 {
 #introPage h1 {
     color: #FEFCFD;
     font-size: 32px;
-    margin-bottom: 20px;
+    margin-top: 100px;
 }
 
 #introPage p {
-    font-size: 18px;
+    font-family: "Roboto";
+    font-weight: bold;
+    font-size: 24px;
     margin-bottom: 40px;
+    padding: 10px;
     max-width: 600px;
 }
 
 #guide p {
+    display: block;
+    padding: 4px;
+    margin: 4px;
     font-size: 24px;
     color: #FEFCFD;
 }
