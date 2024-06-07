@@ -199,6 +199,14 @@ h1 {
     max-width: 600px;
 }
 
+.feedback {
+  position: absolute;
+  bottom: 30px;
+}
+.feedback a{
+  color: #009688;
+}
+
 #guide p {
     display: block;
     padding: 4px;
