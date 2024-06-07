@@ -12,6 +12,11 @@
             font-family: "Roboto"; /* Замініть 'Roboto' на бажаний шрифт */
             font-size: 1em; /* Задайте бажаний розмір шрифту */
         }
+        #guide p {
+            font-weight: bold;
+            font-family: "Roboto";
+            font-size: 24px;
+        }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADre9i0W_86odCBBI-6pNRgoFlkkeMva8&libraries=places"></script>
     <script defer src="script.js"></script>
@@ -34,22 +39,24 @@
         <button id="startButton" onclick="startApp()">Почати</button>
     </div>
     <div id="guide" style="display: none;">
-        <br><br><br>
+        <br>
         <h1>Посібник</h1>
         <p>Цей маркер <image src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png"></image> вказує на точку відліку. Його можна довільно пересувати
-        <br>Щоб розпочати оберіть потрібну вам функцію з пошуку місця та натисніть на відповідну кнопку
-        <br>Після цього на мапі з'являться маркери <image src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"></image>,
-        <br>що вказують на локації обраного типу в радіусі до 10 кілометрів
-        <br>Далі вкажіть кількість витрат палива транспортним засобом та оберіть найбільш
-        <br>привабливий для вас варіант з запропонованих локацій
-        <br></p>
+        <br>Для початку оберіть потрібну вам функцію з пошуку місця та натисніть на відповідну кнопку
+        <br>Далі на мапі з'являться маркери <image src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"></image>, що вказують
+        <br>на локації обраного типу в радіусі до 10 кілометрів
+        <br>Потім вкажіть кількість витрат палива транспортним засобом та оберіть
+        <br>найбільш привабливий для вас варіант з запропонованих локацій
+        <br>Після цього буде побудовано маршрут до обраного місця,
+        <br>а також вирахується відстань та середня імовірна витрата палива
+        </p>
         <button id="startButton" onclick="startApp()">Почати</button>
     </div>
     <div id="appPage" style="display: none;">
         <h1>Need To Drive</h1>
         <div class="container">
             <div id="weather"></div>
-            <div id="map"></div>
+            <div id="map"></div> 
         </div>
         <div id="controls">
             <button onclick="toggleMarkers('gas_station')">Найближчі заправки</button>
