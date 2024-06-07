@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Roboto";
     background-color: #3B3355;
     margin: 0;
     padding: 0;
@@ -10,10 +10,11 @@ body {
 }
 
 h1 {
-    color: #333;
-    margin-top: 20px;
+    padding: 5px;
+    color: #FEFCFD;
+    margin-top: 12px;
     text-align: center;
-    font-size: 24px;
+    font-size: 30px;
 }
 
 .container {
@@ -30,10 +31,14 @@ h1 {
 #weather, #map {
     flex: 1 1 45%;
     width: 200px;
-    height: 480px;
+    height: 440px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     box-sizing: border-box;
+}
+
+#map {
+    border:4px solid#5D5D81
 }
 
 #weather {
@@ -41,21 +46,22 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-color: white;
+    background-color: #BFCDE0;
     padding: 20px;
-    border: 2px solid #ccc;
+    border: 4px solid #5D5D81;
 }
 
 #weather h2 {
     margin-top: 0;
-    color: #333;
-    font-size: 32px;
+    color: #3B3355;
+    font-size: 36px;
 }
 
 #weather p {
     margin: 4px 0;
-    color: #666;
-    font-size: 24px;
+    color: #3B3355;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #controls {
@@ -66,101 +72,151 @@ h1 {
 }
 
 #controls button {
-    background-color: #007bff;
-    color: white;
+    background-color:#5D5D81;
+    color: #FEFCFD;
     border: none;
     padding: 15px 30px;
     margin: 5px;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px;
     transition: background-color 0.3s, transform 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #controls button:hover {
-    background-color: #0056b3;
+    background-color: #5D5D81;
     transform: scale(1.05);
 }
 
 #notification {
     margin: 20px 0;
-    color: red;
+    color: #FEFCFD;
     font-weight: bold;
 }
 
 #fuelInputContainer {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 50px;
+    height: 120px;
+    background: #5D5D81;
+    color: #FEFCFD;
     text-align: center;
 }
 
 #fuelInputContainer label {
-    font-size: 18px;
-    margin-right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 20px;
 }
 
 #fuelInputContainer input {
-    font-size: 16px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    height: 15%;
+    margin: 8px;
+    font-size: 20px;
+    padding: 15px 30px;
+    border-radius: 25px;
+    border: 0px solid;
     max-width: 80px;
     text-align: center;
 }
 
 #fuelConsumptionResult {
+    font-weight: bold;
     font-size: 18px;
-    color: #333;
+    color: #FEFCFD;
     margin-top: 10px;
 }
 
 /* Стилі для екранів шириною до 600px (мобільні пристрої) */
 @media only screen and (max-width: 600px) {
     h1 {
-        font-size: 18px;
+        font-size: bold 24px;
     }
 
     .container {
-        width: 90%;
-        max-width: 90%;
-        margin: 20px auto;
-        flex-direction: column;
-    }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      height: 100%;
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+  }
+  
+  #weather, #map {
+      flex: 1 1 45%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+  }
+  
+  #map {
+      height: 300px;
+      padding: 5px;
+      border:4px solid#5D5D81
+  }
+  
+  #weather {
+      width: 100%;
+      background-color: #BFCDE0;
+      padding: 20px;
+      border: 4px solid #5D5D81;
+  }
+  
+  #weather h2 {
+      margin-top: 0;
+      color: #3B3355;
+      font-size: 36px;
+  }
+  
+  #weather p {
+      margin: 4px 0;
+      color: #3B3355;
+      font-size: 20px;
+      font-weight: bold;
+  }
+  
+  #controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+  }
+  
+  #controls button {
+      background-color:#5D5D81;
+      color: #FEFCFD;
+      border: none;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 50px;
+      font-size: 20px;
+      transition: background-color 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-    #weather, #map {
-        width: 80%;
-        min-width: 80%;
-        margin-bottom: 10px;
-    }
-
-    #map {
-        width: 480px;
-    }
-
-    #weather {
-        padding: 10px;
-        font-size: 18px;
-    }
-
-    #weather h2 {
-        font-size: 20px;
-    }
-
-    #weather p {
-        margin: 3px 0;
-    }
-
-    #controls button {
-        padding: 15px 30px;
-        font-size: 14px;
-    }
+  #fuelInputContainer input {
+      height: 25%;
+      margin: 8px;
+      font-size: 24px;
+      padding: 15px 30px;
+      border-radius: 25px;
+      border: 0px solid;
+      max-width: 80px;
+     text-align: center;
+  }
 }
-
 /* Стилі для початкової сторінки */
 #introPage {
     background-color: #3B3355;
     color: white;
     width: 100%;
-    height: 100%;
+    height: 720px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -177,6 +233,27 @@ h1 {
     font-size: 18px;
     margin-bottom: 40px;
     max-width: 600px;
+}
+
+#guide p {
+    font-size: 24px;
+    color: #FEFCFD;
+}
+
+#guideButton {
+  background-color: #5D5D81;
+  color: #FEFCFD;
+  border: none;
+  padding: 20px 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+#guideButton:hover {
+  background-color: #5D5D81;
+  transform: scale(1.1);
 }
 
 #startButton {
@@ -198,10 +275,11 @@ h1 {
 .loop-wrapper {
     background-color: #3B3355;
     margin: 0 auto;
-    position: relative;
+    position: absolute;
+    top: 100px;
     display: block;
     width: 100%;
-    height: 120px;
+    height: 100px;
     overflow: hidden;
     border-bottom: 3px solid #3B3355;
     color: #3B3355;
@@ -258,7 +336,7 @@ h1 {
     background: #BFCDE0;
   }
   .truck {
-    background-color: #BFCDE0;
+    background: #BFCDE0;
     background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/130015/truck.svg) no-repeat;
     background-size: contain;
     height: 60px;
@@ -278,7 +356,7 @@ h1 {
   .wheels  { animation: truck 4s   0.001s ease infinite; }
   
   @keyframes tree {
-    0%   { transform: translate(1350px); }
+    0%   { transform: translate(1500px); }
     50% {}
     100% { transform: translate(-50px); }
   }
@@ -293,11 +371,6 @@ h1 {
     100% { transform: translate(-50px); }
   }
   
-  @keyframes wind {
-    0%   {  }
-    50%   { transform: translateY(3px) }
-    100%   { }
-  }
   @keyframes mtn {
     100% {
       transform: translateX(-3000px) rotate(130deg);
