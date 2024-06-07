@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeedToDrive</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Внутрішній стильовий блок для зміни шрифту кнопок */
+        #controls button, #control button:hover {
+            font-weight: bold;
+            font-family: "Roboto"; /* Замініть 'Roboto' на бажаний шрифт */
+            font-size: 1em; /* Задайте бажаний розмір шрифту */
+        }
+    </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADre9i0W_86odCBBI-6pNRgoFlkkeMva8&libraries=places"></script>
     <script defer src="script.js"></script>
 </head>
@@ -19,8 +27,22 @@
             <div class="truck"></div>
             <div class="wheels"></div>
         </div> 
-        <h1>Ласкаво просимо до NeedToDrive</h1>
+        <br><br><br>
+        <h1>Ласкаво просимо до <span style="color:#009688">NeedToDrive</span></h1>
         <p>Цей сайт допоможе вам знайти найближчі заправки та паркінги, а також підрахувати витрати палива на ваш маршрут.</p>
+        <button id="guideButton" onclick="startGuide()">Посібник</button><br>
+        <button id="startButton" onclick="startApp()">Почати</button>
+    </div>
+    <div id="guide" style="display: none;">
+        <br><br><br>
+        <h1>Посібник</h1>
+        <p>Цей маркер <image src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png"></image> вказує на точку відліку. Його можна довільно пересувати
+        <br>Щоб розпочати оберіть потрібну вам функцію з пошуку місця та натисніть на відповідну кнопку
+        <br>Після цього на мапі з'являться маркери <image src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"></image>,
+        <br>що вказують на локації обраного типу в радіусі до 10 кілометрів
+        <br>Далі вкажіть кількість витрат палива транспортним засобом та оберіть найбільш
+        <br>привабливий для вас варіант з запропонованих локацій
+        <br></p>
         <button id="startButton" onclick="startApp()">Почати</button>
     </div>
     <div id="appPage" style="display: none;">
