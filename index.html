@@ -6,12 +6,13 @@
     <title>NeedToDrive</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Внутрішній стильовий блок для зміни шрифту кнопок */
         #controls button, #control button:hover {
             font-weight: bold;
-            font-family: "Roboto"; 
-            font-size: 1em; 
+            font-family: "Roboto"; /* Замініть 'Roboto' на бажаний шрифт */
+            font-size: 1em; /* Задайте бажаний розмір шрифту */
         }
-        #guide p {
+        #guide p, .feedback {
             font-weight: bold;
             font-family: "Roboto";
             font-size: 24px;
@@ -36,6 +37,9 @@
         <p>Цей сайт допоможе вам знайти найближчі заправки та паркінги, а також підрахувати витрати палива на ваш маршрут.</p>
         <button id="guideButton" onclick="startGuide()">Посібник</button><br>
         <button id="startButton" onclick="startApp()">Почати</button>
+        <div class="feedback">
+            <a href="mailto:sir.balabai@gmail.com">Зворотній зв'язок</a>
+        </div>
     </div>
     <div id="guide" style="display: none;">
         <br>
