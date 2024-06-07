@@ -202,7 +202,7 @@ function calculateAndDisplayRoute(destination) {
 function updateFuelConsumption() {
     if (currentRoute) {
         const fuelConsumption = document.getElementById('fuelInput').value;
-        const distance = currentRoute.routes[0].legs[0].distance.value / 1000; // distance in km
+        const distance = currentRoute.routes[0].legs[0].distance.value / 1000;
         const fuelUsed = (fuelConsumption * distance) / 100;
         const fuelResultDiv = document.getElementById('fuelConsumptionResult');
         const notificationDiv = document.getElementById('notification');
