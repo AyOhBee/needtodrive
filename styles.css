@@ -231,6 +231,11 @@ h1 {
   transform: scale(1.1);
 }
 
+#guide #startButton {
+  position: relative;
+  margin-top: 10px;
+}
+
 #startButton {
     background-color: #5D5D81;
     color: #FEFCFD;
