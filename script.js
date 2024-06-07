@@ -16,8 +16,20 @@ const blueMarkerIcon = {
 
 function startApp() {
     document.getElementById("introPage").style.display = "none";
+    document.getElementById("guide").style.display = "none";
     document.getElementById("appPage").style.display = "block";
     initMap();
+}
+
+function startGuide() {
+    document.getElementById("introPage").style.display = "none";
+    document.getElementById("guide").style.display = "block";
+}
+
+function startIntro() {
+    
+    document.getElementById("guide").style.display = "none";
+    document.getElementById("introPage").style.display = "block";
 }
 
 function initMap() {
@@ -114,18 +126,19 @@ function toggleMarkers(type) {
         clearMarkers();
         currentType = type;
         const request = {
-            location: map.getCenter(),
-            radius: '5000',
+            location: userMarker.getPosition(),
+            radius: '10000',
             type: [type]
         };
         service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, (results, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                for (let i = 0; i < results.length; i++) {
-                    createMarker(results[i]);
-                }
+                const limit = Math.min(results.length, 200); // Ліміт до 50 маркерів
+                for (let i = 0; i < limit; i++) {
+                createMarker(results[i]);
             }
-        });
+        }
+    });
     }
 }
 
@@ -192,6 +205,7 @@ function updateFuelConsumption() {
         const distance = currentRoute.routes[0].legs[0].distance.value / 1000; // distance in km
         const fuelUsed = (fuelConsumption * distance) / 100;
         const fuelResultDiv = document.getElementById('fuelConsumptionResult');
-        fuelResultDiv.textContent = `Ви використаєте приблизно ${fuelUsed.toFixed(2)} літрів палива на цей маршрут.`;
+        const notificationDiv = document.getElementById('notification');
+        fuelResultDiv.innerHTML = `Відстань до обраного пункту: ${distance} км.<br><br>Ви використаєте приблизно ${fuelUsed.toFixed(2)} літрів палива на цей маршрут.`;
     }
 }
