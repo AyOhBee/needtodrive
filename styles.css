@@ -41,6 +41,20 @@ h1 {
     border:4px solid#5D5D81
 }
 
+.gm-style-iw {
+  width: auto !important;
+  height: 110px !important; 
+  overflow: hidden;
+}
+
+.gm-ui-hover-effect {
+  width: 10px !important;
+  height: 10px !important; 
+  top: 2px !important; 
+  right: 30px !important; 
+}
+
+
 #weather {
     max-width: 320px;
     display: flex;
@@ -361,3 +375,5 @@ h1 {
       transform: translateX(-3000px);
     }
   }
+
+  
